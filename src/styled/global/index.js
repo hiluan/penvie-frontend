@@ -1,8 +1,6 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
-@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300;400&display=swap');
-
   * {
     margin: 0;
     padding: 0;
@@ -40,7 +38,6 @@ const GlobalStyle = createGlobalStyle`
 
   h4 {
     font-family: 'Source Sans Pro', sans-serif;
-    color: ${(props) => props.theme.primary[800]};
     font-size: 1.4rem;
   }
 
@@ -80,6 +77,37 @@ const GlobalStyle = createGlobalStyle`
     background: transparent;
     margin-top: 15px;
   }
+
+  .pink-gradient-bg {
+  background-color: #dd5ce5;
+  background-image: url(https://cdn.openai.com/API/images/icon_bg_magenta.svg);
+  background-size: cover;
+}
+
+.red-gradient-bg {
+  background-color: #ef4146;
+  background-image: url(https://cdn.openai.com/API/images/icon_bg_red.svg);
+  background-size: cover;
+}
+
+.orange-gradient-bg {
+  background-color: #f4ac36;
+  background-image: url(https://cdn.openai.com/API/images/icon_bg_orange.svg);
+  background-size: cover;
+}
+
+.green-gradient-bg {
+  background-color: #19c37d;
+  background-image: url(https://cdn.openai.com/API/images/icon_bg_green.svg);
+  background-size: cover;
+}
+
+.purple-gradient-bg {
+  background-color: #5436da;
+  background-image: url(https://cdn.openai.com/API/images/icon_bg_blue.svg);
+  background-size: cover;
+}
+
 `;
 
 export default GlobalStyle;

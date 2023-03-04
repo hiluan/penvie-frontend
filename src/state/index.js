@@ -1,22 +1,26 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  mode: 'light',
-  language: 'vi',
+  mode: "light",
+  language: "vi",
+  page: "/",
 };
 
 export const globalSlice = createSlice({
-  name: 'global',
+  name: "global",
   initialState,
   reducers: {
     setMode: (state) => {
-      state.mode = state.mode === 'light' ? 'dark' : 'light';
+      state.mode = state.mode === "light" ? "dark" : "light";
     },
     setLanguage: (state, action) => {
       state.language = action.payload;
     },
+    setPage: (state, action) => {
+      state.page = action.payload;
+    },
   },
 });
 
-export const { setMode, setLanguage } = globalSlice.actions;
+export const { setMode, setLanguage, setPage } = globalSlice.actions;
 export default globalSlice.reducer;

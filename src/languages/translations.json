@@ -25,6 +25,13 @@
       "grammarCorrection": "Grammar Correction",
       "qa": "Questions & Answers"
     },
+    "sidebar": {
+      "deleteAll": "Delete everything",
+      "dark": "Dark mode",
+      "light": "Light mode",
+      "myAccount": "My account",
+      "logOut": "Log out"
+    },
     "home": {
       "title": "Home Page",
       "welcomeMessage": "Welcome to our app!",
