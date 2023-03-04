@@ -1,0 +1,72 @@
+{
+  "en": {
+    "ui": {
+      "button": {
+        "surpriseMe": "Surprise me!",
+        "generate": "Generate",
+        "generating": "Generating...",
+        "generateAgain": "Generate Again",
+        "download": "Download",
+        "sharePost": "Share with the community",
+        "sharing": "Sharing..."
+      },
+      "text": {
+        "noMorePosts": "No more posts 😊"
+      },
+      "placeholder": {
+        "name": "Your Name",
+        "searchPost": "Search Post",
+        "searchTerm": "Search Term"
+      }
+    },
+    "category": {
+      "essays": "Essays",
+      "codex": "Codex",
+      "grammarCorrection": "Grammar Correction",
+      "qa": "Questions & Answers"
+    },
+    "home": {
+      "title": "Home Page",
+      "welcomeMessage": "Welcome to our app!",
+      "getStartedButton": "Get started"
+    },
+    "about": {
+      "title": "About Page",
+      "description": "Learn more about our app and what we do.",
+      "teamMember1": "John Smith",
+      "teamMember2": "Jane Doe"
+    },
+    "contact": {
+      "title": "Contact Page",
+      "emailLabel": "Email address",
+      "messageLabel": "Message",
+      "submitButtonText": "Send message"
+    }
+  },
+  "vi": {
+    "ui": {},
+    "category": {
+      "essays": "Luan Van",
+      "codex": "Codex",
+      "grammarCorrection": "Grammar Correction",
+      "qa": "Questions & Answers"
+    },
+    "home": {
+      "title": "Home Page",
+      "welcomeMessage": "Welcome to our app!",
+      "getStartedButton": "Get started"
+    },
+    "about": {
+      "title": "About Page",
+      "description": "Learn more about our app and what we do.",
+      "teamMember1": "John Smith",
+      "teamMember2": "Jane Doe"
+    },
+    "contact": {
+      "title": "Contact Page",
+      "emailLabel": "Email address",
+      "messageLabel": "Message",
+      "submitButtonText": "Send message"
+    }
+  }
+}
