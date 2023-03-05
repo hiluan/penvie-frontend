@@ -11,14 +11,16 @@ const Layout = () => {
   // const isNonMobile = useMediaQuery("(min-width: 600px)");
   // const userId = useSelector((state) => state.global.userId);
   // const { data } = useGetUserQuery(userId);
-
+  const { page } = useSelector((state) => state.global);
   return (
     <Bars>
-      <Sidebar
-        // user={data || {}} // if request gets undefined -> return just {}
-        isSidebarOpen={isSidebarOpen}
-        setIsSidebarOpen={setIsSidebarOpen}
-      ></Sidebar>
+      {page !== "/" && (
+        <Sidebar
+          // user={data || {}} // if request gets undefined -> return just {}
+          isSidebarOpen={isSidebarOpen}
+          setIsSidebarOpen={setIsSidebarOpen}
+        />
+      )}
       <div>
         <Navbar
           // user={data || {}}
