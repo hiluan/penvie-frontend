@@ -13,6 +13,7 @@ import {
   UserIcon,
 } from "assets/icons";
 import { setMode } from "state";
+import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
@@ -146,25 +147,25 @@ const Sidebar = () => {
   return (
     <SidebarX>
       <div id="sidebar-top">
-        <a href="" id="sidebar-home-btn">
+        <Link to="/" id="sidebar-home-btn">
           <HomeIcon />
-        </a>
-        <a href="" id="sidebar-new-btn">
+        </Link>
+        <Link to="#" id="sidebar-new-btn">
           <PlusIcon />
           New Chat
-        </a>
+        </Link>
       </div>
 
       <div id="sidebar-mid">
         {/* { map all essays/codex/.. } */}
         {testItems.map(({ text, icon }, index) => (
-          <a href="" className="sb-item-a" key={index}>
+          <Link to="#" className="sb-item-a" key={index}>
             <div className="sb-item-container">
               {icon}
               <span>{text}</span>
             </div>
             {/* <div className="sb-mid-nowrap-fade"></div> */}
-          </a>
+          </Link>
         ))}
       </div>
 
@@ -172,12 +173,11 @@ const Sidebar = () => {
 
       <div id="sidebar-bottom">
         {menuItems.map(({ text, icon, handle }, index) => (
-          <a
-            href=""
+          <Link
+            to="#"
             className="sb-item-a"
             key={index}
-            onClick={(e) => {
-              e.preventDefault();
+            onClick={() => {
               handle({ text });
             }}
           >
@@ -185,7 +185,7 @@ const Sidebar = () => {
               {icon}
               <span>{text}</span>
             </div>
-          </a>
+          </Link>
         ))}
       </div>
     </SidebarX>

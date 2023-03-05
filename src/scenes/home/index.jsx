@@ -1,9 +1,9 @@
 import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { CodeIcon, EssayIcon, LangIcon, QuestionIcon } from "assets/icons";
 import translations from "../../languages/translations.json";
-import { MdEditNote, MdTranslate, MdCode } from "react-icons/md";
-import { HiOutlineChatBubbleLeftRight } from "react-icons/hi2";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { createRef, useEffect, useRef } from "react";
 // Set current language for based on user's browser
 
 const Home = () => {
@@ -14,43 +14,52 @@ const Home = () => {
     {
       text: lang.category.essays,
       link: "/essays",
-      icon: <MdEditNote />,
-      background: ".pink-gradient-bg",
+      icon: <EssayIcon />,
+      background: "pink-gradient-bg",
     },
     {
       text: lang.category.grammarCorrection,
       link: "/grammar-correction",
-      icon: <MdTranslate />,
-      background: ".green-gradient-bg",
+      icon: <LangIcon />,
+      background: "green-gradient-bg",
     },
     {
       text: lang.category.qa,
       link: "/qa",
-      icon: <HiOutlineChatBubbleLeftRight />,
-      background: ".orange-gradient-bg",
+      icon: <QuestionIcon />,
+      background: "orange-gradient-bg",
     },
     {
       text: lang.category.codex,
       link: "/codex",
-      icon: <MdCode />,
-      background: ".purple-gradient-bg",
+      icon: <CodeIcon />,
+      background: "purple-gradient-bg",
     },
   ];
+
+  // create GROW animation, must use this to have the effect in all map items
+  const growRefs = useRef(categories.map(() => createRef()));
+  useEffect(() => {
+    growRefs.current.forEach((ref) => {
+      if (ref.current) {
+        ref.current.classList.add("animate-grow");
+      }
+    });
+  }, []);
+
   return (
     <HomeX>
       <div className="grid-categories">
-        {categories.map(({ text, icon, link, background }) => (
-          <div className="grid-category" key={text}>
-            <div
-              onClick={() => {
-                navigate(link);
-              }}
-              className={`${background}`}
-            >
-              {icon}
-            </div>
-            <h4>{text}</h4>
-          </div>
+        {categories.map(({ text, icon, link, background }, index) => (
+          <Link
+            to={link}
+            ref={growRefs.current[index]}
+            className="grid-category"
+            key={text}
+          >
+            <div className={`${background}`}>{icon}</div>
+            {/* <h4>{text}</h4> */}
+          </Link>
         ))}
       </div>
     </HomeX>
@@ -63,27 +72,43 @@ const HomeX = styled.section`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
   height: 100vh;
 
   .grid-categories {
     display: grid;
-    grid-gap: 3px;
+    grid-gap: 1rem;
     grid-template-columns: 1fr; /* Default value for all screen sizes */
   }
 
   .grid-category {
     div {
+      padding: 2rem;
+      font-size: 3rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       border-radius: 1rem;
-      padding: 4rem;
-      background-color: red;
-      font-size: 4rem;
+      color: ${(props) => props.theme.grey[900]};
+      cursor: pointer;
+      transition: all ease 0.3s;
+      &:hover {
+        filter: brightness(1.1);
+        svg {
+          transition: all ease 0.3s;
+          transform: scale(1.15);
+        }
+      }
     }
     h4 {
       color: ${(props) => props.theme.grey[900]};
       text-align: center;
     }
   }
+
+  .animate-grow {
+    animation: grow 0.3s ease-out;
+  }
+
   /* On screens larger than lg size, set grid columns to 4 */
   @media (min-width: 1024px) {
     .grid-categories {

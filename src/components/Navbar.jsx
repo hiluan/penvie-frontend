@@ -11,7 +11,7 @@ const Navbar = () => {
   return (
     <NavbarX>
       <div>
-        <h1 style={{ color: theme.primary[100] }}>My App</h1>
+        <h1 style={{ color: theme.primary[900] }}>Penvie</h1>
         <button onClick={() => dispatch(setMode())}>
           {mode === "dark" ? "+++" : "---"}
         </button>
@@ -23,9 +23,13 @@ const Navbar = () => {
 export default Navbar;
 
 const NavbarX = styled.nav`
-  position: relative;
+  position: absolute;
+  width: 100%;
+
   div {
-    position: absolute;
+    display: flex;
+    justify-content: space-around;
   }
+
   /* backgroundColor: theme.background[10] */
 `;

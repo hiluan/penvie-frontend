@@ -21,14 +21,16 @@ const Layout = () => {
           setIsSidebarOpen={setIsSidebarOpen}
         />
       )}
-      <div>
-        <Navbar
-          // user={data || {}}
-          isSidebarOpen={isSidebarOpen}
-          setIsSidebarOpen={setIsSidebarOpen}
-        />
-        <Outlet />
-      </div>
+      {page === "/" && (
+        <div id="outlet-container">
+          <Navbar
+            // user={data || {}}
+            isSidebarOpen={isSidebarOpen}
+            setIsSidebarOpen={setIsSidebarOpen}
+          />
+          <Outlet />
+        </div>
+      )}
     </Bars>
   );
 };
@@ -38,10 +40,16 @@ const Bars = styled.section`
   width: 100%;
   height: 100%;
   display: flex;
+  /* justify-content: center; */
 
-  @media (max-width: 768px) {
-    display: block;
+  #outlet-container {
+    position: relative;
+    width: 100%;
   }
+
+  /* @media (max-width: 768px) {
+    display: block;
+  } */
 `;
 
 export default Layout;

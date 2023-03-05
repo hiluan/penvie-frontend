@@ -113,6 +113,15 @@ const GlobalStyle = createGlobalStyle`
   background-size: cover;
 }
 
+@keyframes grow {
+  from {
+    transform: scale(0.65);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
 `;
 
 export default GlobalStyle;

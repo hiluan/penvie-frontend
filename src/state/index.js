@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+// loadState and saveSate in localStorage
+// To keep the state of your application after refreshing the page or entering the address in the browser
 const loadState = () => {
   try {
     const serializedState = localStorage.getItem("state");
