@@ -16,43 +16,51 @@ const GlobalStyle = createGlobalStyle`
   .app {
     height: 100%;
     width: 100%;
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 200;
+
     background-color: ${(props) => props.theme.background[0]};
   }
 
   h1 {
-    font-family: 'Source Sans Pro', sans-serif;
-    color: ${(props) => props.theme.primary[900]};
+    font-family: 'Roboto', sans-serif;
+    color: ${(props) => props.theme.grey[900]};
     font-size: 2rem;
   }
 
   h2 {
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 1.8rem;
+    color: ${(props) => props.theme.grey[800]};
   }
 
   h3 {
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 1.6rem;
+    color: ${(props) => props.theme.grey[800]};
   }
 
   h4 {
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 1.4rem;
+    color: ${(props) => props.theme.grey[700]};
   }
 
   h5 {
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 1.2rem;
+    color: ${(props) => props.theme.grey[700]};
   }
 
   h6 {
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 1rem;
+    color: ${(props) => props.theme.grey[600]};
   }
 
   ::-webkit-scrollbar {
-    width: 5px;
+    width: 0.5rem;
   }
   /* Track */
   ::-webkit-scrollbar-track {
@@ -60,8 +68,7 @@ const GlobalStyle = createGlobalStyle`
   }
   /* Handle */
   ::-webkit-scrollbar-thumb {
-    border-radius: 2px;
-    background: #21295c;
+    background: ${(props) => props.theme.background[100]};
   }
   ::-webkit-scrollbar-thumb:hover {
     background: #6870fa;
@@ -71,11 +78,9 @@ const GlobalStyle = createGlobalStyle`
   }
   ::-webkit-scrollbar-track-piece:end {
     background: transparent;
-    margin-bottom: 15px;
   }
   ::-webkit-scrollbar-track-piece:start {
     background: transparent;
-    margin-top: 15px;
   }
 
   .pink-gradient-bg {

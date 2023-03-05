@@ -37,7 +37,7 @@ const Home = () => {
     },
   ];
   return (
-    <PageHome>
+    <HomeX>
       <div className="grid-categories">
         {categories.map(({ text, icon, link, background }) => (
           <div className="grid-category" key={text}>
@@ -53,13 +53,13 @@ const Home = () => {
           </div>
         ))}
       </div>
-    </PageHome>
+    </HomeX>
   );
 };
 
 export default Home;
 
-const PageHome = styled.section`
+const HomeX = styled.section`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -80,7 +80,7 @@ const PageHome = styled.section`
       font-size: 4rem;
     }
     h4 {
-      color: ${(props) => props.theme.primary[900]};
+      color: ${(props) => props.theme.grey[900]};
       text-align: center;
     }
   }
@@ -106,9 +106,9 @@ const PageHome = styled.section`
   }
 
   @media screen and (min-width: 480px) {
-    .grid-category:nth-child(7n + 1) {
+    /* .grid-category:nth-child(7n + 1) {
       grid-column: auto/span 2;
-      grid-row: auto/span 2;
-    }
+      grid-row: auto/span 2; */
+    /* } */
   }
 `;

@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   mode: "light",
-  language: "vi",
+  language: "en",
   page: "/",
 };
 

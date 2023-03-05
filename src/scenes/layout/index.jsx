@@ -16,7 +16,6 @@ const Layout = () => {
     <Bars>
       <Sidebar
         // user={data || {}} // if request gets undefined -> return just {}
-        drawerWidth="250px"
         isSidebarOpen={isSidebarOpen}
         setIsSidebarOpen={setIsSidebarOpen}
       ></Sidebar>
