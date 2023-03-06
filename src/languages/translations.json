@@ -48,7 +48,8 @@
       "logOut": "Log out"
     },
     "home": {
-      "title": "Home Page",
+      "title": "AI WRITING ASSISTANT",
+      "subtitle": "Powered by OpenAi's ChatGPT",
       "welcomeMessage": "Welcome to our app!",
       "getStartedButton": "Get started"
     },

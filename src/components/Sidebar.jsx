@@ -7,6 +7,7 @@ import {
   HomeIcon,
   Logout,
   Moon,
+  PenLogo,
   PlusIcon,
   Sun,
   TrashIcon,
@@ -148,7 +149,8 @@ const Sidebar = () => {
     <SidebarX>
       <div id="sidebar-top">
         <Link to="/" id="sidebar-home-btn">
-          <HomeIcon />
+          <PenLogo />
+          {/* <HomeIcon /> */}
         </Link>
         <Link to="#" id="sidebar-new-btn">
           <PlusIcon />
@@ -236,7 +238,8 @@ const SidebarX = styled.nav`
     padding-bottom: 0.25rem;
 
     a {
-      padding: 0.75rem 0;
+      padding: 0.4rem 0;
+      /* padding: 0.75rem 0; */
       margin: 0.25rem 0;
       border: 1px solid ${(props) => props.theme.background[200]};
     }

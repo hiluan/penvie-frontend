@@ -62,6 +62,11 @@ const GlobalStyle = createGlobalStyle`
   a {
     text-decoration: none;
     cursor: pointer;
+    font-weight: 300;
+  }
+
+  p {
+    font-weight: 300;
   }
 
   ::-webkit-scrollbar {
@@ -120,24 +125,76 @@ const GlobalStyle = createGlobalStyle`
 
 
 .lightmode-gradient-bg {
-  background: linear-gradient(47deg, #400040, #1a0000, #2d2400, #002315, #00001a);
+  background: linear-gradient(115deg, #1e001e 0%, #000014 100%),
+    radial-gradient(
+      90% 100% at 50% 0%,
+      #1c1900 0%,
+      #000014 100%
+    ),
+    radial-gradient(
+      100% 100% at 80% 0%,
+      #faff00 0%,
+      #240000 100%
+    ),
+    radial-gradient(
+      150% 210% at 100% 0%,
+      #70ff00 0%,
+      #14af7d 0%,
+      #000aff 100%
+    ),
+    radial-gradient(
+      100% 100% at 100% 30%,
+      #ff4d00 0%,
+      rgba(0, 200, 255, 1) 100%
+    ),
+    linear-gradient(60deg, #ff0000 0%, #7856ff 100%);
+  background-blend-mode: overlay, overlay, difference, difference, difference,
+    normal;
+
+  /* background: linear-gradient(47deg, #1e001e, #0e0000, #1c1900, #001d14, #000014);
   background-size: 1000% 1000%;
 
   -webkit-animation: AniHomeBG 60s ease infinite;
   -moz-animation: AniHomeBG 60s ease infinite;
-  animation: AniHomeBG 60s ease infinite;
+  animation: AniHomeBG 60s ease infinite; */
 }
 
 .darkmode-gradient-bg {
-  background: linear-gradient(47deg, #fff2ff, #ffd6d7, #fff5e6, #d3f3ef, #c5b5ff);
+  background: linear-gradient(115deg, #ffdfe0 0%, #fff8ea 100%),
+    radial-gradient(
+      90% 100% at 50% 0%,
+      #d4c4ff 0%,
+      #ffdfe0 100%
+    ),
+    radial-gradient(
+      150% 210% at 100% 0%,
+      #d4c4ff 0%,
+      #fff8ea 50%,
+      #e7f8f5 100%
+    ),
+    radial-gradient(
+      100% 100% at 80% 0%,
+      #e7f8f5 0%,
+      #fff4ff 100%
+    ),
+    radial-gradient(
+      100% 100% at 100% 30%,
+      rgba(255, 244, 255, 1) 0%,
+      #d4c4ff 100%
+    ),
+    linear-gradient(60deg, #fff8ea 0%, #d4c4ff 100%);
+  background-blend-mode: difference, overlay, difference, difference, difference,
+    normal;
+
+    /* background: linear-gradient(47deg, #fff4ff, #ffdfe0, #fff8ea, #e7f8f5, #d4c4ff);
   background-size: 1000% 1000%;
 
   -webkit-animation: AniHomeBG 60s ease infinite;
   -moz-animation: AniHomeBG 60s ease infinite;
-  animation: AniHomeBG 60s ease infinite;
+  animation: AniHomeBG 60s ease infinite; */
 }
 
-@-webkit-keyframes AniHomeBG {
+/* @-webkit-keyframes AniHomeBG {
       0%{background-position:0% 99%}
       50%{background-position:100% 2%}
       100%{background-position:0% 99%}
@@ -151,7 +208,7 @@ const GlobalStyle = createGlobalStyle`
       0%{background-position:0% 99%}
       50%{background-position:100% 2%}
       100%{background-position:0% 99%}
-  }
+  } */
 
 @keyframes grow {
   from {

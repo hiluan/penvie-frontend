@@ -1,6 +1,12 @@
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { CodeIcon, EssayIcon, LangIcon, QuestionIcon } from "assets/icons";
+import {
+  CodeIcon,
+  EssayIcon,
+  LangIcon,
+  PenLogo,
+  QuestionIcon,
+} from "assets/icons";
 import translations from "../../languages/translations.json";
 import styled from "styled-components";
 import { createRef, useEffect, useRef } from "react";
@@ -9,32 +15,32 @@ import { createRef, useEffect, useRef } from "react";
 const Home = () => {
   const { mode, language } = useSelector((state) => state.global);
   const navigate = useNavigate();
-  const lang = translations[language].category;
+  const lang = translations[language];
   const categories = [
     {
-      title: lang.essays.title,
-      subtitle: lang.essays.subtitle,
+      title: lang.category.essays.title,
+      subtitle: lang.category.essays.subtitle,
       link: "/essays",
       icon: <EssayIcon />,
       background: "pink-gradient-bg",
     },
     {
-      title: lang.grammarCorrection.title,
-      subtitle: lang.grammarCorrection.subtitle,
+      title: lang.category.grammarCorrection.title,
+      subtitle: lang.category.grammarCorrection.subtitle,
       link: "/grammar-correction",
       icon: <LangIcon />,
       background: "green-gradient-bg",
     },
     {
-      title: lang.qa.title,
-      subtitle: lang.qa.subtitle,
+      title: lang.category.qa.title,
+      subtitle: lang.category.qa.subtitle,
       link: "/qa",
       icon: <QuestionIcon />,
       background: "orange-gradient-bg",
     },
     {
-      title: lang.codex.title,
-      subtitle: lang.codex.subtitle,
+      title: lang.category.codex.title,
+      subtitle: lang.category.codex.subtitle,
       link: "/codex",
       icon: <CodeIcon />,
       background: "purple-gradient-bg",
@@ -57,6 +63,11 @@ const Home = () => {
         mode === "dark" ? "darkmode-gradient-bg" : "lightmode-gradient-bg"
       }
     >
+      <div id="home-top">
+        <PenLogo />
+        <h1>{lang.home.title}</h1>
+        <p>{lang.home.subtitle}</p>
+      </div>
       <div className="grid-categories">
         {categories.map(
           ({ title, subtitle, icon, link, background }, index) => (
@@ -84,22 +95,43 @@ export default Home;
 
 const HomeX = styled.section`
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100vh;
+
+  #home-top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
+    margin-top: -5rem;
+
+    h1 {
+      font-family: "Open Sans", sans-serif;
+      color: ${(props) => props.theme.grey[700]};
+      font-weight: lighter;
+      margin-top: 1rem;
+    }
+
+    p {
+      margin-bottom: 1rem;
+      color: ${(props) => props.theme.grey[500]};
+    }
+  }
 
   .grid-categories {
     display: grid;
     grid-gap: 1rem;
     grid-template-columns: 1fr; /* Default value for all screen sizes */
-    background-color: ${(props) => props.theme.background[0]};
+    /* background-color: rgba(${(props) => props.theme.background[0]}, 5); */
     padding: 1rem;
     border-radius: 1rem;
     transition: box-shadow 0.3s ease;
     box-shadow: 0 0 30px 5px rgba(0, 0, 0, 0.1);
-
     &:hover {
       box-shadow: none;
+      box-shadow: 0 0 30px 5px rgba(0, 0, 0, 0.05);
     }
   }
 
@@ -144,6 +176,11 @@ const HomeX = styled.section`
       left: 0;
       width: 100%;
       text-align: center;
+      font-weight: 500;
+    }
+
+    p {
+      white-space: nowrap;
     }
   }
 
