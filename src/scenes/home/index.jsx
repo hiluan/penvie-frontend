@@ -107,6 +107,9 @@ const HomeX = styled.section`
     margin-bottom: 2rem;
     margin-top: -5rem;
 
+    svg {
+      font-size: 2.4rem;
+    }
     h1 {
       font-family: "Open Sans", sans-serif;
       color: ${(props) => props.theme.grey[700]};

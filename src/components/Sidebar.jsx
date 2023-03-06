@@ -3,126 +3,34 @@ import translations from "../languages/translations.json";
 import styled from "styled-components";
 import { themes } from "theme";
 import {
-  DocIcon,
-  HomeIcon,
-  Logout,
+  Sun,
   Moon,
+  Logout,
+  DocIcon,
+  PenIcon,
   PenLogo,
   PlusIcon,
-  Sun,
   TrashIcon,
   UserIcon,
 } from "assets/icons";
 import { setMode } from "state";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useEffect, useMemo, useState } from "react";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
+  const testItems = new Array(20).fill({ text: "This is the Chat number" });
+  const [list, setList] = useState(testItems);
+  const [active, setActive] = useState("");
+  const { pathname } = useLocation();
   const { mode, language } = useSelector((state) => state.global);
   const theme = themes[mode];
   const lang = translations[language];
-  const testItems = [
-    {
-      text: "Dashboard Client Facing Dashboard Dashboard",
-      icon: <DocIcon />,
-    },
-    {
-      text: "Client Facing",
-      icon: <DocIcon />,
-    },
-    {
-      text: "Products",
-      icon: <DocIcon />,
-    },
-    {
-      text: "Customers",
-      icon: <DocIcon />,
-    },
-    {
-      text: "Transactions",
-      icon: <DocIcon />,
-    },
-    {
-      text: "Geography",
-      icon: <DocIcon />,
-    },
-    {
-      text: "Sales",
-      icon: <DocIcon />,
-    },
-    {
-      text: "Overview",
-      icon: <DocIcon />,
-    },
-    {
-      text: "Daily",
-      icon: <DocIcon />,
-    },
-    {
-      text: "Monthly",
-      icon: <DocIcon />,
-    },
-    {
-      text: "Breakdown",
-      icon: <DocIcon />,
-    },
-    {
-      text: "Management",
-      icon: <DocIcon />,
-    },
-    {
-      text: "Admin",
-      icon: <DocIcon />,
-    },
-    {
-      text: "Performance",
-      icon: <DocIcon />,
-    },
-    {
-      text: "Performance",
-      icon: <DocIcon />,
-    },
-    {
-      text: "Performance",
-      icon: <DocIcon />,
-    },
-    {
-      text: "Performance",
-      icon: <DocIcon />,
-    },
-    {
-      text: "Performance",
-      icon: <DocIcon />,
-    },
-    {
-      text: "Performance",
-      icon: <DocIcon />,
-    },
-    {
-      text: "Performance",
-      icon: <DocIcon />,
-    },
-    {
-      text: "Performance",
-      icon: <DocIcon />,
-    },
-    {
-      text: "Performance",
-      icon: <DocIcon />,
-    },
-    {
-      text: "Performance",
-      icon: <DocIcon />,
-    },
-    {
-      text: "Performance",
-      icon: <DocIcon />,
-    },
-    {
-      text: "Performance",
-      icon: <DocIcon />,
-    },
-  ];
+
+  useEffect(() => {
+    setActive(pathname.substring(1)); // anytime url changes, set the active to the current page
+  }, [pathname]);
+
   const menuItems = [
     {
       text: lang.sidebar.deleteAll,
@@ -145,6 +53,13 @@ const Sidebar = () => {
       handle: ({ text }) => console.log(text),
     },
   ];
+
+  const handleShowMore = () => {
+    setList([...list, ...testItems]);
+  };
+
+  const memoizedList = useMemo(() => [...list], [testItems]);
+
   return (
     <SidebarX>
       <div id="sidebar-top">
@@ -154,21 +69,30 @@ const Sidebar = () => {
         </Link>
         <Link to="#" id="sidebar-new-btn">
           <PlusIcon />
-          New Chat
+          {lang.sidebar.newChat}
         </Link>
       </div>
 
       <div id="sidebar-mid">
         {/* { map all essays/codex/.. } */}
-        {testItems.map(({ text, icon }, index) => (
-          <Link to="#" className="sb-item-a" key={index}>
+        {memoizedList.map(({ text, _id }, index) => (
+          <Link to={`${pathname}/${index}`} className="sb-item-a" key={index}>
             <div className="sb-item-container">
-              {icon}
-              <span>{text}</span>
+              <DocIcon />
+              <span>
+                {text} {index}
+              </span>
+              <div id="sb-fade-block"></div>
+              <div>
+                <PenIcon />
+                <TrashIcon />
+              </div>
             </div>
-            {/* <div className="sb-mid-nowrap-fade"></div> */}
           </Link>
         ))}
+        <Link to="#" id="sb-show-more" onClick={handleShowMore}>
+          {lang.sidebar.showMore}
+        </Link>
       </div>
 
       <SideBarHr />
@@ -268,12 +192,25 @@ const SidebarX = styled.nav`
     display: flex;
     align-items: center;
     justify-content: center;
+
     svg {
+      color: ${(props) => props.theme.grey[500]};
+    }
+
+    > svg {
       margin: 0 0.5rem;
     }
     span {
       margin-left: 0.5rem;
       white-space: nowrap;
+    }
+    > div {
+      position: absolute;
+      right: 0;
+      display: flex;
+    }
+    > div > svg {
+      margin: 0 0.25rem;
     }
   }
 
@@ -281,6 +218,7 @@ const SidebarX = styled.nav`
     display: flex;
     flex-direction: column;
     overflow-y: hidden;
+    padding-bottom: 1rem;
 
     &:hover {
       overflow-y: scroll;
@@ -291,25 +229,30 @@ const SidebarX = styled.nav`
       overflow: hidden;
     }
 
-    /*
-    For later: make text fade at the end.
-    .sb-mid-nowrap-fade {
+    #sb-show-more {
+      margin-top: 0.5rem;
+      /* margin-bottom: 3rem; */
+      padding: 0.25rem 1rem;
+      border: 1px solid ${(props) => props.theme.background[200]};
+      background-color: ${(props) => props.theme.background[100]};
+      margin: 0 auto;
+      &:hover {
+        background-color: ${(props) => props.theme.background[200]};
+      }
+    }
+
+    #sb-fade-block {
       position: absolute;
       top: 0;
       right: 0;
-      bottom: 0;
-      width: 8px;
-      z-index: 10;
-      background-image: linear-gradient(
+      width: 20%;
+      height: 100%;
+      background: linear-gradient(
         to left,
-        rgba(0, 0, 0, 0),
-        rgba(0, 0, 0, 0.75)
+        ${(props) => props.theme.background[50]},
+        transparent
       );
-      background-color: #1f2937;
     }
-    .group:hover .from-[#2A2B32] {
-      background-color: #2a2b32;
-    } */
   }
 
   #sidebar-bottom {

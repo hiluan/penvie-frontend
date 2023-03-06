@@ -13,7 +13,7 @@ const Layout = () => {
   // const { data } = useGetUserQuery(userId);
   const { page } = useSelector((state) => state.global);
   return (
-    <Bars>
+    <LayoutContainer>
       {page !== "/" && (
         <Sidebar
           // user={data || {}} // if request gets undefined -> return just {}
@@ -21,25 +21,25 @@ const Layout = () => {
           setIsSidebarOpen={setIsSidebarOpen}
         />
       )}
-      {page === "/" && (
-        <div id="outlet-container">
+      <div id="outlet-container">
+        {page === "/" && (
           <Navbar
             // user={data || {}}
             isSidebarOpen={isSidebarOpen}
             setIsSidebarOpen={setIsSidebarOpen}
           />
-          <Outlet />
-        </div>
-      )}
-    </Bars>
+        )}
+        <Outlet />
+      </div>
+    </LayoutContainer>
   );
 };
 
-const Bars = styled.section`
+const LayoutContainer = styled.section`
   /* display: ${(props) => (props.isNonMobile ? "flex" : "block")}; */
+  display: flex;
   width: 100%;
   height: 100%;
-  display: flex;
   /* justify-content: center; */
 
   #outlet-container {

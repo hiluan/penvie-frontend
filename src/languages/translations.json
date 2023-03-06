@@ -25,7 +25,104 @@
     "category": {
       "essays": {
         "title": "Essays",
-        "subtitle": "Craft, refine, and polish your essays in any language with our powerful writing and editing AI."
+        "subtitle": "Craft, refine, and polish your essays in any language with our powerful writing and editing AI.",
+        "predefined": {
+          "language": "Language",
+          "languageOptions": [
+            "Vietnamese",
+            "English",
+            "Chinese",
+            "Korean",
+            "Japanese",
+            "French",
+            "German",
+            "Spanish",
+            "Russian",
+            "Portugese",
+            "Thai",
+            "Italian"
+          ],
+          "wordLimit": "Word limit",
+          "totalTokens": "Cost",
+          "mood": "Mood",
+          "moodOptions": [
+            "Formal",
+            "Informal",
+            "Serious",
+            "Humorous",
+            "Satirical",
+            "Sarcastic",
+            "Optimistic",
+            "Pessimistic",
+            "Hopeful",
+            "Despairing",
+            "Nostalgic",
+            "Reflective"
+          ],
+          "topic": "Topic",
+          "topicOptions": [
+            "Education",
+            "Technology",
+            "Politics",
+            "Science",
+            "Health",
+            "Environment",
+            "Business",
+            "Entertainment",
+            "Sports",
+            "Travel",
+            "Food",
+            "Art",
+            "Literature",
+            "History",
+            "Religion and Philosophy"
+          ],
+          "tone": "Tone",
+          "toneOptions": [
+            "Objective",
+            "Subjective",
+            "Persuasive",
+            "Analytical",
+            "Critical",
+            "Creative",
+            "Descriptive",
+            "Narrative",
+            "Expository",
+            "Satirical",
+            "Sarcastic",
+            "Ironical"
+          ],
+          "audience": "Audience",
+          "audienceOptions": [
+            "General",
+            "Academic",
+            "Professional",
+            "Scientific",
+            "Layperson",
+            "Young Adult",
+            "Children",
+            "Elderly",
+            "Male",
+            "Female",
+            "LGBTQIA+"
+          ],
+          "formatting": "Formatting",
+          "formattingOptions": [
+            "APA: American Psychological Association",
+            "MLA: Modern Language Association",
+            "Chicago: The Chicago Manual of Style",
+            "IEEE: Institute of Electrical and Electronics Engineers",
+            "Harvard: Harvard referencing style",
+            "Vancouver: Vancouver referencing style",
+            "ACS: American Chemical Society",
+            "AMA: American Medical Association",
+            "ASCE: American Society of Civil Engineers",
+            "AMA: American Marketing Association",
+            "Bluebook: The Bluebook: A Uniform System of Citation",
+            "OSCOLA: Oxford Standard for Citation of Legal Authorities",
+            "NLM: National Library of Medicine"
+          ]
+        }
       },
       "codex": {
         "title": "Codex",
@@ -45,7 +142,9 @@
       "dark": "Dark mode",
       "light": "Light mode",
       "myAccount": "My account",
-      "logOut": "Log out"
+      "logOut": "Log out",
+      "showMore": "Show more",
+      "newChat": "New"
     },
     "home": {
       "title": "AI WRITING ASSISTANT",

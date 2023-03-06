@@ -37,11 +37,11 @@ export const PenIcon = React.memo(() => (
   <svg
     stroke="currentColor"
     fill="none"
-    stroke-width="2"
+    strokeWidth="2"
     viewBox="0 0 24 24"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-    class="h-4 w-4"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="h-4 w-4"
     height="1em"
     width="1em"
     xmlns="http://www.w3.org/2000/svg"
@@ -290,5 +290,23 @@ export const QuestionIcon = React.memo(() => (
       d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
       clipRule="evenodd"
     ></path>
+  </svg>
+));
+
+export const SendIcon = React.memo(() => (
+  <svg
+    stroke="currentColor"
+    fill="none"
+    strokeWidth="2"
+    viewBox="0 0 24 24"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="h-4 w-4 mr-1"
+    height="1em"
+    width="1em"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <line x1="22" y1="2" x2="11" y2="13"></line>
+    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
   </svg>
 ));
