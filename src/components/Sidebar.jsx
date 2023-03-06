@@ -223,9 +223,7 @@ const SidebarX = styled.nav`
     height: 100%;
     color: ${(props) => props.theme.grey[900]};
     background-color: ${(props) => props.theme.background[50]};
-    text-decoration: none;
     border-radius: 0.3rem;
-    cursor: pointer;
     &:hover {
       background-color: ${(props) => props.theme.background[100]};
       transition: all ease 0.3s;

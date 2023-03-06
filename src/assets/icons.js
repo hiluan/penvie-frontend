@@ -1,5 +1,56 @@
 import React from "react";
 
+export const PenLogo = React.memo(() => (
+  <svg
+    viewBox="0 0 24 24"
+    className="h-4 w-4"
+    height="2em"
+    width="2em"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <defs>
+      <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" style={{ stopColor: "#4F46E5" }} />
+        <stop offset="100%" style={{ stopColor: "#D715E9" }} />
+      </linearGradient>
+    </defs>
+    <path
+      d="M12 20h9"
+      stroke="url(#grad1)"
+      strokeWidth="2"
+      fill="none"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    ></path>
+    <path
+      d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"
+      stroke="url(#grad1)"
+      strokeWidth="2"
+      fill="none"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    ></path>
+  </svg>
+));
+
+export const PenIcon = React.memo(() => (
+  <svg
+    stroke="currentColor"
+    fill="none"
+    stroke-width="2"
+    viewBox="0 0 24 24"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    class="h-4 w-4"
+    height="1em"
+    width="1em"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path d="M12 20h9"></path>
+    <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+  </svg>
+));
+
 export const DocIcon = React.memo(() => (
   <svg
     xmlns="http://www.w3.org/2000/svg"

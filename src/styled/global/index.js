@@ -20,7 +20,7 @@ const GlobalStyle = createGlobalStyle`
     font-size: 0.95rem;
     font-weight: 200;
 
-    background-color: ${(props) => props.theme.background[0]};
+    background-color: ${(props) => props.theme.background[10]};
   }
 
   h1 {
@@ -57,6 +57,11 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Roboto', sans-serif;
     font-size: 1rem;
     color: ${(props) => props.theme.grey[600]};
+  }
+
+  a {
+    text-decoration: none;
+    cursor: pointer;
   }
 
   ::-webkit-scrollbar {
@@ -112,6 +117,41 @@ const GlobalStyle = createGlobalStyle`
   background-image: url(https://cdn.openai.com/API/images/icon_bg_blue.svg);
   background-size: cover;
 }
+
+
+.lightmode-gradient-bg {
+  background: linear-gradient(47deg, #400040, #1a0000, #2d2400, #002315, #00001a);
+  background-size: 1000% 1000%;
+
+  -webkit-animation: AniHomeBG 60s ease infinite;
+  -moz-animation: AniHomeBG 60s ease infinite;
+  animation: AniHomeBG 60s ease infinite;
+}
+
+.darkmode-gradient-bg {
+  background: linear-gradient(47deg, #fff2ff, #ffd6d7, #fff5e6, #d3f3ef, #c5b5ff);
+  background-size: 1000% 1000%;
+
+  -webkit-animation: AniHomeBG 60s ease infinite;
+  -moz-animation: AniHomeBG 60s ease infinite;
+  animation: AniHomeBG 60s ease infinite;
+}
+
+@-webkit-keyframes AniHomeBG {
+      0%{background-position:0% 99%}
+      50%{background-position:100% 2%}
+      100%{background-position:0% 99%}
+  }
+  @-moz-keyframes AniHomeBG {
+      0%{background-position:0% 99%}
+      50%{background-position:100% 2%}
+      100%{background-position:0% 99%}
+  }
+  @keyframes AniHomeBG {
+      0%{background-position:0% 99%}
+      50%{background-position:100% 2%}
+      100%{background-position:0% 99%}
+  }
 
 @keyframes grow {
   from {

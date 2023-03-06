@@ -7,30 +7,34 @@ import { createRef, useEffect, useRef } from "react";
 // Set current language for based on user's browser
 
 const Home = () => {
-  const { language } = useSelector((state) => state.global);
+  const { mode, language } = useSelector((state) => state.global);
   const navigate = useNavigate();
-  const lang = translations[language];
+  const lang = translations[language].category;
   const categories = [
     {
-      text: lang.category.essays,
+      title: lang.essays.title,
+      subtitle: lang.essays.subtitle,
       link: "/essays",
       icon: <EssayIcon />,
       background: "pink-gradient-bg",
     },
     {
-      text: lang.category.grammarCorrection,
+      title: lang.grammarCorrection.title,
+      subtitle: lang.grammarCorrection.subtitle,
       link: "/grammar-correction",
       icon: <LangIcon />,
       background: "green-gradient-bg",
     },
     {
-      text: lang.category.qa,
+      title: lang.qa.title,
+      subtitle: lang.qa.subtitle,
       link: "/qa",
       icon: <QuestionIcon />,
       background: "orange-gradient-bg",
     },
     {
-      text: lang.category.codex,
+      title: lang.codex.title,
+      subtitle: lang.codex.subtitle,
       link: "/codex",
       icon: <CodeIcon />,
       background: "purple-gradient-bg",
@@ -48,19 +52,29 @@ const Home = () => {
   }, []);
 
   return (
-    <HomeX>
+    <HomeX
+      className={
+        mode === "dark" ? "darkmode-gradient-bg" : "lightmode-gradient-bg"
+      }
+    >
       <div className="grid-categories">
-        {categories.map(({ text, icon, link, background }, index) => (
-          <Link
-            to={link}
-            ref={growRefs.current[index]}
-            className="grid-category"
-            key={text}
-          >
-            <div className={`${background}`}>{icon}</div>
-            {/* <h4>{text}</h4> */}
-          </Link>
-        ))}
+        {categories.map(
+          ({ title, subtitle, icon, link, background }, index) => (
+            <div key={index}>
+              <Link
+                to={link}
+                ref={growRefs.current[index]}
+                className="grid-category-icon"
+              >
+                <div className={`${background}`}>{icon}</div>
+              </Link>
+              <div className={`${background} grid-category-sub`}>
+                <h5>{title}</h5>
+                <p>{subtitle}</p>
+              </div>
+            </div>
+          )
+        )}
       </div>
     </HomeX>
   );
@@ -78,9 +92,18 @@ const HomeX = styled.section`
     display: grid;
     grid-gap: 1rem;
     grid-template-columns: 1fr; /* Default value for all screen sizes */
+    background-color: ${(props) => props.theme.background[0]};
+    padding: 1rem;
+    border-radius: 1rem;
+    transition: box-shadow 0.3s ease;
+    box-shadow: 0 0 30px 5px rgba(0, 0, 0, 0.1);
+
+    &:hover {
+      box-shadow: none;
+    }
   }
 
-  .grid-category {
+  .grid-category-icon {
     div {
       padding: 2rem;
       font-size: 3rem;
@@ -88,21 +111,47 @@ const HomeX = styled.section`
       justify-content: center;
       align-items: center;
       border-radius: 1rem;
-      color: ${(props) => props.theme.grey[900]};
-      cursor: pointer;
-      transition: all ease 0.3s;
+      color: white;
+      /* color: ${(props) => props.theme.grey[900]}; */
+      transition: transform ease 0.3s, filter ease 0.3s;
       &:hover {
         filter: brightness(1.1);
-        svg {
-          transition: all ease 0.3s;
-          transform: scale(1.15);
-        }
+      }
+      svg {
+        transition: transform ease 0.3s;
+      }
+      &:hover svg {
+        transform: scale(1.15);
       }
     }
-    h4 {
-      color: ${(props) => props.theme.grey[900]};
+  }
+
+  .grid-category-sub {
+    position: absolute;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    bottom: 10vh;
+    visibility: hidden;
+    background-color: ${(props) => props.theme.grey[900]};
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+    transform: translateX(-50%) scale(0.3);
+    left: 50%;
+    opacity: 0;
+
+    h5 {
+      position: absolute;
+      top: -1.5rem;
+      left: 0;
+      width: 100%;
       text-align: center;
     }
+  }
+
+  .grid-category-icon:hover + .grid-category-sub {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) scale(1);
+    filter: grayscale(68%) brightness(1.6);
   }
 
   .animate-grow {

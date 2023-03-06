@@ -1,5 +1,8 @@
 {
   "en": {
+    "meta": {
+      "description": "Empower your writing with AI! Our app uses OpenAI and ChatGPT to enhance your writing, correct grammar, answer questions, write codes and more. Get accurate, efficient and high-quality results in no time."
+    },
     "ui": {
       "button": {
         "surpriseMe": "Surprise me!",
@@ -20,10 +23,22 @@
       }
     },
     "category": {
-      "essays": "Essays",
-      "codex": "Codex",
-      "grammarCorrection": "Grammar Correction",
-      "qa": "Questions & Answers"
+      "essays": {
+        "title": "Essays",
+        "subtitle": "Craft, refine, and polish your essays in any language with our powerful writing and editing AI."
+      },
+      "codex": {
+        "title": "Codex",
+        "subtitle": "Write, debug, and translate code effortlessly across all languages and frameworks with our advanced AI."
+      },
+      "grammarCorrection": {
+        "title": "Grammar Correction",
+        "subtitle": "Correct your sentences into standard English, Chinese, and more with our advanced OpenAI's ChatGPT technology."
+      },
+      "qa": {
+        "title": "Questions & Answers",
+        "subtitle": "Get answers and explanations to your questions from simple to advanced terms using our state-of-the-art AI."
+      }
     },
     "sidebar": {
       "deleteAll": "Delete everything",
@@ -31,32 +46,6 @@
       "light": "Light mode",
       "myAccount": "My account",
       "logOut": "Log out"
-    },
-    "home": {
-      "title": "Home Page",
-      "welcomeMessage": "Welcome to our app!",
-      "getStartedButton": "Get started"
-    },
-    "about": {
-      "title": "About Page",
-      "description": "Learn more about our app and what we do.",
-      "teamMember1": "John Smith",
-      "teamMember2": "Jane Doe"
-    },
-    "contact": {
-      "title": "Contact Page",
-      "emailLabel": "Email address",
-      "messageLabel": "Message",
-      "submitButtonText": "Send message"
-    }
-  },
-  "vi": {
-    "ui": {},
-    "category": {
-      "essays": "Luan Van",
-      "codex": "Codex",
-      "grammarCorrection": "Grammar Correction",
-      "qa": "Questions & Answers"
     },
     "home": {
       "title": "Home Page",
