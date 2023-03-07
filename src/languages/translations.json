@@ -3,6 +3,14 @@
     "meta": {
       "description": "Empower your writing with AI! Our app uses OpenAI and ChatGPT to enhance your writing, correct grammar, answer questions, write codes and more. Get accurate, efficient and high-quality results in no time."
     },
+    "user": {
+      "balance": "Current balance",
+      "token": "Token",
+      "tokens": "Tokens",
+      "tokenLimit": "Insufficient Tokens: You need more tokens to submit this.",
+      "tokenBuy": "Get Tokens!",
+      "tokenBuyMore": "Get more Tokens!"
+    },
     "ui": {
       "button": {
         "surpriseMe": "Surprise me!",
@@ -23,14 +31,15 @@
       }
     },
     "chatForm": {
-      "rewrite": "Rewrite",
-      "totalTokens": "Estimated cost",
-      "balance": "Current balance"
+      "rewrite": "Rewrite"
     },
     "category": {
       "essays": {
         "title": "Essays",
         "subtitle": "Craft, refine, and polish your essays in any language with our powerful writing and editing AI.",
+
+        "cost": "Estimated cost of Tokens",
+        "noWordLimit": "Before submitting your ideas, please provide the ___ information.",
         "predefinedKeys": {
           "language": "Language",
           "topic": "Topic",

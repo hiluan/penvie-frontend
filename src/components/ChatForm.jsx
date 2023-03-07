@@ -1,50 +1,60 @@
-import { SendIcon } from "assets/icons";
-import { Link } from "react-router-dom";
 import React, { useState } from "react";
+import { SendIcon } from "assets/icons";
 import styled from "styled-components";
 
-const ChatForm = ({ predefinedVals, predefinedKeys, totalTokens, balance }) => {
+const ChatForm = ({
+  post,
+  setPost,
+  predefinedVals,
+  predefinedKeys,
+  totalTokens,
+  balance,
+}) => {
   const [checkbox, setCheckbox] = useState("");
   const [value, setValue] = useState("");
 
-  const handleChange = (e) => {
+  const handleChangeTextarea = (e) => {
     setValue(e.target.value);
     e.target.style.height = "auto";
     e.target.style.height = `${e.target.scrollHeight}px`;
-    // if (e.target.value === "") {
-    //   e.target.style.height = "40px"; // set the original height here
-    // }
-
     setValue(e.target.value);
   };
 
-  const handleSubmit = (e) => {};
+  const handleChangeInputs = (e, index) => {
+    const { name, value, type, checked, number } = e.target;
+    console.log("🚀 ~ name:", name);
+    if (name === "wordLimit") {
+      console.log("🚀 ~ wordLimit:", "wordLimit");
+    }
+    // const newVal = type === "checkbox" ? checked : value;
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
 
   return (
-    <ChatFormX>
-      <div id="cf-balance-container">
-        <p>
-          <span>{totalTokens}</span>
-          <span>{}</span>
-          <span> | </span>
-          <span>{balance}</span>
-          <span>{}</span>
-        </p>
-      </div>
+    <ChatFormX onSubmit={handleSubmit}>
+      {checkbox && (
+        <div id="cf-predefined-options-shadow" onClick={() => setCheckbox("")}>
+          asdfsadsdfasdffsadf
+        </div>
+      )}
+
       <div id="cf-textarea-container">
-        <textarea rows={1} type="text" onChange={handleChange} />
+        <textarea rows={1} type="text" onChange={handleChangeTextarea} />
         <button>
           <SendIcon />
         </button>
       </div>
-      <div id="cf-options-container">
+      <div id="cf-predefined-container">
         {Object.keys(predefinedKeys).map((key) =>
           key === "language" ? (
-            <select
+            <select // ---------------------------------- 1 select
               defaultValue={predefinedVals.language[0]}
               className="cf-predefined"
               key={key}
               name={key}
+              onChange={handleChangeInputs}
             >
               {predefinedVals[key].map((lang) => (
                 <option key={lang} value={lang}>
@@ -56,7 +66,7 @@ const ChatForm = ({ predefinedVals, predefinedKeys, totalTokens, balance }) => {
             key === "audience" ||
             key === "formatting" ||
             key === "tone" ||
-            key === "mood" ? (
+            key === "mood" ? ( // ----------------------- 5 checkboxes
             <div key={key}>
               <button
                 className="cf-predefined"
@@ -64,31 +74,35 @@ const ChatForm = ({ predefinedVals, predefinedKeys, totalTokens, balance }) => {
               >
                 {predefinedKeys[key]}
               </button>
-              {checkbox && (
-                <div
-                  id="cf-checkbox-wrapper"
-                  onClick={() => setCheckbox("")}
-                ></div>
-              )}
-              {checkbox === key &&
-                predefinedVals[key].map((option) => (
-                  <label key={option}>
-                    <input type="checkbox" name={key} value={option} /> {option}
-                  </label>
-                ))}
+              <div
+                className={
+                  checkbox === key ? "cf-predefined-options-panel" : ""
+                }
+              >
+                {checkbox === key &&
+                  predefinedVals[key].map((option) => (
+                    <label key={option}>
+                      <input
+                        type="checkbox"
+                        name={key}
+                        value={option}
+                        onChange={handleChangeInputs}
+                      />{" "}
+                      {option}
+                    </label>
+                  ))}
+              </div>
             </div>
           ) : key === "wordLimit" ? (
-            <input
+            <input // ---------------------------------- 1 text input
+              onChange={handleChangeInputs}
               className="cf-predefined"
+              id="cf-wordlimit"
               key={key}
               type="number"
               name={key}
-              required
+              placeholder={predefinedKeys[key]}
             />
-          ) : key === "totalTokens" ? (
-            <span className="cf-predefined" key={key}>
-              {predefinedKeys[key]}
-            </span>
           ) : null
         )}
       </div>
@@ -105,7 +119,7 @@ const ChatFormX = styled.form`
   align-items: center;
 
   @media (min-width: 768px) {
-    #cf-options-container {
+    #cf-predefined-container {
       display: flex;
       justify-content: space-between;
       width: 100%;
@@ -119,7 +133,7 @@ const ChatFormX = styled.form`
 
   /* styles for smaller screens */
   @media (max-width: 767px) {
-    #cf-options-container {
+    #cf-predefined-container {
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -129,10 +143,6 @@ const ChatFormX = styled.form`
         margin-bottom: 1rem;
       }
     }
-  }
-
-  #cf-balance-container {
-    display: flex;
   }
 
   #cf-textarea-container {
@@ -148,19 +158,8 @@ const ChatFormX = styled.form`
     width: 600px;
 
     textarea {
-      /* max-height: 200px; */
-      /* height: 24px; */
-      /* overflow-y: hidden; */
-      /* rows: 1; */
-      /* margin: 0; */
-
       width: 100%;
       max-height: 160px;
-      color: ${(props) => props.theme.grey[700]};
-      background-color: ${(props) => props.theme.background[50]};
-      box-shadow: inset 0px 0px 1px ${(props) => props.theme.background[500]},
-        0 0 20px 3px rgba(0, 0, 0, 0.15);
-      transition: box-shadow ease 0.3s, background-color ease 0.3s;
       padding: 0.9rem 2.5rem 0.9rem 0.75rem;
       border-radius: 0.375rem;
       border: none;
@@ -168,55 +167,28 @@ const ChatFormX = styled.form`
       resize: none;
       display: flex;
       transition: all ease 0.3s;
-      &:hover,
+      color: ${(props) => props.theme.grey[600]};
+      background-color: ${(props) => props.theme.background[50]};
+      box-shadow: inset 0px 0px 0px 0.8px
+          ${(props) => props.theme.pinkAccent[500]},
+        0 0 10px 2px rgba(0, 0, 0, 0.1);
+      transition: box-shadow ease 0.3s, background-color ease 0.3s,
+        border ease 0.3s;
+      &:hover {
+        box-shadow: inset 0px 0px 0px 1px
+          ${(props) => props.theme.pinkAccent[300]};
+      }
       &:focus,
       &:active {
         box-shadow: none;
-        background-color: ${(props) => props.theme.background[100]};
+        background-color: ${(props) => props.theme.background[10]};
+      }
 
-        &:focus {
-          outline: none;
-          ring: none;
-        }
-        &:focus-visible {
-          outline: none;
-          ring: none;
-        }
-
-        @media (min-width: 768px) {
-          textarea {
-          }
+      @media (min-width: 768px) {
+        textarea {
         }
       }
     }
-    /* position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    max-width: 90%;
-    width: 600px;
-
-    textarea {
-      width: 100%;
-      background-color: ${(props) => props.theme.background[50]};
-      box-shadow: inset 0px 0px 1px ${(props) => props.theme.background[500]},
-        0 0 20px 3px rgba(0, 0, 0, 0.15);
-      transition: box-shadow ease 0.3s, background-color ease 0.3s;
-      color: ${(props) => props.theme.grey[900]};
-      padding: 0.75rem 0;
-      padding-left: 0.75rem;
-    border-radius: 0.375rem;
-      border: none;
-      outline: none;
-      padding-right: 2.5rem;
-
-      &:hover,
-      &:focus,
-      &:active {
-        box-shadow: none;
-        background-color: ${(props) => props.theme.background[100]};
-      } */
-    /* } */
 
     button {
       position: absolute;
@@ -236,40 +208,86 @@ const ChatFormX = styled.form`
       }
     }
   }
-  #cf-options-container {
+  #cf-predefined-container {
     display: flex;
     max-width: 90%;
     .cf-predefined {
       margin: 0 0.25rem;
       display: flex;
       align-items: center;
-      color: ${(props) => props.theme.grey[500]};
-      background-color: ${(props) => props.theme.background[10]};
-      border: none;
+      color: ${(props) => props.theme.grey[200]};
+      background-color: ${(props) => props.theme.background[50]};
+      border: 1px solid ${(props) => props.theme.background[100]};
+      opacity: 0.68;
       border-radius: 0.375rem;
       padding: 0.5rem;
-      box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.1);
       transition: box-shadow ease 0.3s;
       outline: none;
       &:hover {
-        box-shadow: none;
+        background-color: ${(props) => props.theme.background[10]};
+        color: ${(props) => props.theme.grey[700]};
       }
     }
 
+    #cf-wordlimit {
+      color: ${(props) => props.theme.grey[700]};
+      box-shadow: inset 0px 0px 0px 0.6px
+        ${(props) => props.theme.pinkAccent[500]};
+
+      &:hover {
+        box-shadow: inset 0px 0px 0px 1px
+          ${(props) => props.theme.pinkAccent[300]};
+      }
+
+      &:focus,
+      &:active {
+        box-shadow: none;
+        background-color: ${(props) => props.theme.background[10]};
+      }
+
+      &::placeholder {
+        color: ${(props) => props.theme.grey[200]};
+      }
+    }
     select {
     }
     button {
       border: none;
     }
+  }
 
-    #cf-checkbox-wrapper {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: rgba(0, 0, 0, 0.1);
-      z-index: 1;
+  #cf-predefined-options-shadow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 5;
+    backdrop-filter: blur(3px);
+  }
+
+  .cf-predefined-options-panel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(
+      calc(-50% + 125px),
+      -50%
+    ); // must be editted for responsive
+    z-index: 10;
+    border-radius: 0.375rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    border: none;
+    box-shadow: none;
+    background-color: ${(props) => props.theme.background[10]};
+    label {
+      color: ${(props) => props.theme.grey[900]};
+      font-weight: 300;
+      font-size: large;
+      padding: 0.5rem 0;
     }
   }
 `;

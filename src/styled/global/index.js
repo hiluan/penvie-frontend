@@ -20,7 +20,7 @@ const GlobalStyle = createGlobalStyle`
     font-size: 0.95rem;
     font-weight: 200;
 
-    background-color: ${(props) => props.theme.background[10]};
+    background-color: ${(props) => props.theme.background[100]};
   }
 
   h1 {
