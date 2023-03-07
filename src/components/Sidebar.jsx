@@ -1,6 +1,4 @@
 import { useDispatch, useSelector } from "react-redux";
-import translations from "../languages/translations.json";
-import styled from "styled-components";
 import { themes } from "theme";
 import {
   Sun,
@@ -16,6 +14,8 @@ import {
 import { setMode } from "state";
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
+import translations from "../languages/translations.json";
+import styled from "styled-components";
 
 const Sidebar = () => {
   const dispatch = useDispatch();

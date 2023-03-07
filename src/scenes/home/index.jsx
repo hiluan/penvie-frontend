@@ -71,12 +71,8 @@ const Home = () => {
       <div className="grid-categories">
         {categories.map(
           ({ title, subtitle, icon, link, background }, index) => (
-            <div key={index}>
-              <Link
-                to={link}
-                ref={growRefs.current[index]}
-                className="grid-category-icon"
-              >
+            <div key={index} ref={growRefs.current[index]}>
+              <Link to={link} className="grid-category-icon">
                 <div className={`${background}`}>{icon}</div>
               </Link>
               <div className={`${background} grid-category-sub`}>

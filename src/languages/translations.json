@@ -22,13 +22,26 @@
         "searchTerm": "Search Term"
       }
     },
+    "chatForm": {
+      "rewrite": "Rewrite",
+      "totalTokens": "Estimated cost",
+      "balance": "Current balance"
+    },
     "category": {
       "essays": {
         "title": "Essays",
         "subtitle": "Craft, refine, and polish your essays in any language with our powerful writing and editing AI.",
-        "predefined": {
+        "predefinedKeys": {
           "language": "Language",
-          "languageOptions": [
+          "topic": "Topic",
+          "audience": "Audience",
+          "formatting": "Formatting",
+          "tone": "Tone",
+          "mood": "Mood",
+          "wordLimit": "Word limit"
+        },
+        "predefinedVals": {
+          "language": [
             "Vietnamese",
             "English",
             "Chinese",
@@ -42,10 +55,7 @@
             "Thai",
             "Italian"
           ],
-          "wordLimit": "Word limit",
-          "totalTokens": "Cost",
-          "mood": "Mood",
-          "moodOptions": [
+          "mood": [
             "Formal",
             "Informal",
             "Serious",
@@ -59,8 +69,7 @@
             "Nostalgic",
             "Reflective"
           ],
-          "topic": "Topic",
-          "topicOptions": [
+          "topic": [
             "Education",
             "Technology",
             "Politics",
@@ -77,8 +86,7 @@
             "History",
             "Religion and Philosophy"
           ],
-          "tone": "Tone",
-          "toneOptions": [
+          "tone": [
             "Objective",
             "Subjective",
             "Persuasive",
@@ -92,8 +100,7 @@
             "Sarcastic",
             "Ironical"
           ],
-          "audience": "Audience",
-          "audienceOptions": [
+          "audience": [
             "General",
             "Academic",
             "Professional",
@@ -106,8 +113,7 @@
             "Female",
             "LGBTQIA+"
           ],
-          "formatting": "Formatting",
-          "formattingOptions": [
+          "formatting": [
             "APA: American Psychological Association",
             "MLA: Modern Language Association",
             "Chicago: The Chicago Manual of Style",

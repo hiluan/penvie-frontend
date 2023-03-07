@@ -69,6 +69,14 @@ const GlobalStyle = createGlobalStyle`
     font-weight: 300;
   }
 
+  button {
+    cursor: pointer;
+  }
+
+  textarea {
+    font-family: 'Roboto', sans-serif;
+
+  }
   ::-webkit-scrollbar {
     width: 0.5rem;
   }
@@ -80,18 +88,35 @@ const GlobalStyle = createGlobalStyle`
   ::-webkit-scrollbar-thumb {
     background: ${(props) => props.theme.background[100]};
   }
-  ::-webkit-scrollbar-thumb:hover {
-    background: #6870fa;
-  }
-  ::-webkit-scrollbar-track:hover {
-    background: #21295c;
-  }
   ::-webkit-scrollbar-track-piece:end {
     background: transparent;
   }
   ::-webkit-scrollbar-track-piece:start {
     background: transparent;
   }
+
+  textarea::-webkit-scrollbar {
+    width: 5px;
+  }
+  /* Track */
+  textarea::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  /* Handle */
+  textarea::-webkit-scrollbar-thumb {
+    background: ${(props) => props.theme.background[200]};
+    border-radius: 5px;
+    margin-left: 10px;
+  }
+  textarea::-webkit-scrollbar-track-piece:end {
+    background: transparent;
+    margin-bottom: 5px;
+  }
+  textarea::-webkit-scrollbar-track-piece:start {
+    background: transparent;
+    margin-top: 5px;
+  }
+
 
   .pink-gradient-bg {
   background-color: #dd5ce5;
