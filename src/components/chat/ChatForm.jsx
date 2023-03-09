@@ -30,32 +30,63 @@ const ChatForm = ({ prompt, post, setPost, vals, keys }) => {
   //   }
   // };
 
-  const handleChange = (e) => {
-    const { name, value, checked } = e.target;
+  // working solution without {options: []}
+  // const handleChange = (e) => {
+  //   const { name, value, checked } = e.target;
 
-    setPost((prevState) => ({
-      ...prevState,
-      [name]: checked ? [...post[name], value] : value,
-    }));
+  //   setPost((prevState) => ({
+  //     ...prevState,
+  //     [name]: checked ? [...post[name], value] : value,
+  //   }));
+  // };
+
+  const handleChange = (e) => {
+    const { name, title, value, checked } = e.target;
+
+    if (name === "options") {
+      const updatedOptions = { ...post.options };
+      if (checked) {
+        updatedOptions[title] = [...updatedOptions[title], value];
+      } else {
+        updatedOptions[title] = updatedOptions[title].filter(
+          (val) => val !== value
+        );
+      }
+      setPost((prevState) => ({
+        ...prevState,
+        options: updatedOptions,
+      }));
+    } else {
+      setPost((prevState) => ({
+        ...prevState,
+        [name]: checked ? [...post[name], value] : value,
+      }));
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    let options = Object.keys(keys).map((key) => {
-      const displayName = keys[key];
-      const value = post[key];
+    if (!post.wordLimit)
+      return (
+        <div>
+          <h4>please word</h4>
+        </div>
+      );
 
-      // If the option has multiple values, join them with commas
-      const displayValue = Array.isArray(value) ? value.join(",") : value;
-
-      return `${displayName}: ${displayValue}`;
-    });
-
-    // Join the options with newlines
-    const prompt = options.join("\n");
-
-    console.log(prompt);
+    for (let key in post) {
+      if (post[key].length === 0) continue;
+      if (key !== "options") {
+        prompt += `\n- ${keys[key]}: ${post[key]}.`;
+      } else {
+        for (let option in post.options) {
+          if (post.options[option].length === 0) continue;
+          const all = post.options[option].join(", ");
+          prompt += `\n- ${keys[option]}: ${all}.`;
+        }
+      }
+    }
+    console.log("🚀 ~ prompt:", prompt);
   };
 
   return (

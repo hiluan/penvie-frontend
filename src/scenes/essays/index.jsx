@@ -19,14 +19,14 @@ const Essays = () => {
   const [post, setPost] = useState({
     idea: "",
     language: lang.category.essays.predefinedVals.language[0],
-    // options: {
-    //   topic: [],
-    //   audience: [],
-    //   formatting: [],
-    //   tone: [],
-    //   mood: [],
-    // },
-    options: [],
+    options: {
+      topic: [],
+      audience: [],
+      formatting: [],
+      tone: [],
+      mood: [],
+    },
+    // options: [],
     wordLimit: 0,
   });
 

@@ -17,6 +17,7 @@ const DropdownOptions = ({
           <input
             type="checkbox"
             name={preKey}
+            title={option}
             value={o}
             checked={checkedOptions.includes(o)}
             onChange={handleCheckboxChange}
@@ -124,7 +125,7 @@ const ChatInputCheckboxX = styled.div`
       calc(-50% + 125px),
       -50%
     ); // must be editted for responsive */
-    transition: transform 0.5s ease, height 0.5s ease, opacity 0.5s ease;
+    transition: transform 0.3s ease, height 0.5s ease, opacity 0.5s ease;
     transform-origin: top center;
 
     border-radius: 0.375rem;
@@ -179,6 +180,7 @@ const ChatInputCheckboxX = styled.div`
           input {
             transform: scale(1.2);
             margin: 0 0.8rem;
+            cursor: pointer;
           }
         }
       }
