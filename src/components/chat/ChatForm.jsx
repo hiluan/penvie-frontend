@@ -3,15 +3,8 @@ import { SendIcon } from "assets/icons";
 import styled from "styled-components";
 import { ChatInputCheckbox, ChatInputSelect, ChatInputText } from ".";
 
-const ChatForm = ({
-  prompt,
-  post,
-  setPost,
-  predefinedVals,
-  predefinedKeys,
-}) => {
-  const [isCheckbox, setIsCheckbox] = useState("");
-  const [errorWordLimit, setErrorWordLimit] = useState(false);
+const ChatForm = ({ prompt, post, setPost, vals, keys }) => {
+  const [isCheckbox, setIsCheckbox] = useState(false);
   // const handleChange = (e) => {
   //   const { name, value, checked } = e.target;
   //   if (typeof checked === "boolean") {
@@ -49,15 +42,20 @@ const ChatForm = ({
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!post.wordLimit) {
-      setErrorWordLimit(true);
-      return;
-    }
+    let options = Object.keys(keys).map((key) => {
+      const displayName = keys[key];
+      const value = post[key];
 
-    for (let key in post) {
-      if (post[key].length === 0) continue;
-      prompt += `\n${predefinedKeys[key]}: ${post[key]}`;
-    }
+      // If the option has multiple values, join them with commas
+      const displayValue = Array.isArray(value) ? value.join(",") : value;
+
+      return `${displayName}: ${displayValue}`;
+    });
+
+    // Join the options with newlines
+    const prompt = options.join("\n");
+
+    console.log(prompt);
   };
 
   return (
@@ -65,7 +63,7 @@ const ChatForm = ({
       {isCheckbox && (
         <div
           id="cf-predefined-options-shadow"
-          onClick={() => setIsCheckbox("")}
+          onClick={() => setIsCheckbox(false)}
         ></div>
       )}
 
@@ -76,28 +74,24 @@ const ChatForm = ({
         </button>
       </div>
       <div id="cf-predefined-container">
-        {Object.keys(predefinedKeys).map((preKey) => {
+        {Object.keys(post).map((preKey) => {
           switch (preKey) {
             case "language":
               return (
                 <ChatInputSelect
                   key={preKey}
                   preKey={preKey}
-                  vals={predefinedVals}
+                  vals={vals}
                   handleChange={handleChange}
                 />
               );
-            case "topic":
-            case "audience":
-            case "formatting":
-            case "tone":
-            case "mood":
+            case "options":
               return (
                 <ChatInputCheckbox
                   key={preKey}
                   preKey={preKey}
-                  vals={predefinedVals}
-                  keys={predefinedKeys}
+                  vals={vals.options}
+                  keys={keys}
                   handleChange={handleChange}
                   isCheckbox={isCheckbox}
                   setIsCheckbox={setIsCheckbox}
@@ -108,7 +102,7 @@ const ChatForm = ({
                 <ChatInputText
                   key={preKey}
                   preKey={preKey}
-                  keys={predefinedKeys}
+                  keys={keys}
                   handleChange={handleChange}
                 />
               );
@@ -123,7 +117,7 @@ const ChatForm = ({
 
 const ChatFormX = styled.form`
   position: absolute;
-  bottom: 4vh;
+  bottom: 1vh;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -133,7 +127,6 @@ const ChatFormX = styled.form`
     #cf-predefined-container {
       display: flex;
       justify-content: space-between;
-      width: 100%;
       max-width: 768px;
       margin: 0 auto;
       .cf-predefined {
@@ -223,17 +216,18 @@ const ChatFormX = styled.form`
     display: flex;
     max-width: 90%;
     .cf-predefined {
-      margin: 0 0.25rem;
       display: flex;
       align-items: center;
-      color: ${(props) => props.theme.grey[200]};
+      opacity: 0.68;
+      margin: 0 0.25rem;
+      padding: 0.5rem;
+      outline: none;
+      white-space: nowrap;
+      border-radius: 0.375rem;
+      color: ${(props) => props.theme.grey[400]};
       background-color: ${(props) => props.theme.background[50]};
       border: 1px solid ${(props) => props.theme.background[100]};
-      opacity: 0.68;
-      border-radius: 0.375rem;
-      padding: 0.5rem;
       transition: box-shadow ease 0.3s;
-      outline: none;
       &:hover {
         background-color: ${(props) => props.theme.background[10]};
         color: ${(props) => props.theme.grey[700]};
@@ -273,34 +267,55 @@ const ChatFormX = styled.form`
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.7);
     z-index: 5;
     backdrop-filter: blur(3px);
-  }
-
-  .cf-predefined-options-panel {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(
-      calc(-50% + 125px),
-      -50%
-    ); // must be editted for responsive
-    z-index: 10;
-    border-radius: 0.375rem;
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    border: none;
-    box-shadow: none;
-    background-color: ${(props) => props.theme.background[10]};
-    label {
-      color: ${(props) => props.theme.grey[900]};
-      font-weight: 300;
-      font-size: large;
-      padding: 0.5rem 0;
-    }
   }
 `;
 
 export default ChatForm;
+
+{
+  /* <div id="cf-predefined-container">
+  {Object.keys(keys).map((preKey) => {
+    switch (preKey) {
+      case "language":
+        return (
+          <ChatInputSelect
+            key={preKey}
+            preKey={preKey}
+            vals={vals}
+            handleChange={handleChange}
+          />
+        );
+      case "topic":
+      case "audience":
+      case "formatting":
+      case "tone":
+      case "mood":
+        return (
+          <ChatInputCheckbox
+            key={preKey}
+            preKey={preKey}
+            vals={vals}
+            keys={keys}
+            handleChange={handleChange}
+            isCheckbox={isCheckbox}
+            setIsCheckbox={setIsCheckbox}
+          />
+        );
+      case "wordLimit":
+        return (
+          <ChatInputText
+            key={preKey}
+            preKey={preKey}
+            keys={keys}
+            handleChange={handleChange}
+          />
+        );
+      default:
+        return null;
+    }
+  })}
+</div>; */
+}

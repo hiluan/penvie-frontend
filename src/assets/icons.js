@@ -310,3 +310,31 @@ export const SendIcon = React.memo(() => (
     <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
   </svg>
 ));
+
+export const ChevronDown = React.memo(() => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    height="1.5em"
+    width="1.5em"
+  >
+    <polyline points="6 9 12 15 18 9"></polyline>
+  </svg>
+));
+
+export const ChevronUp = React.memo(() => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    height="1em"
+    width="1em"
+  >
+    <path d="M7 14l5-5 5 5z" />
+    <path d="M0 0h24v24H0z" fill="none" />
+  </svg>
+));

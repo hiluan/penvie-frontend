@@ -12,17 +12,21 @@ import styled from "styled-components";
 
 const Essays = () => {
   const [hasContent, setHasContent] = useState(false);
+  const [errorWordLimit, setErrorWordLimit] = useState(false);
   const { language } = useSelector((state) => state.global);
   const lang = translations[language];
   let { prompt } = lang.category.essays;
   const [post, setPost] = useState({
     idea: "",
     language: lang.category.essays.predefinedVals.language[0],
-    topic: [],
-    audience: [],
-    formatting: [],
-    tone: [],
-    mood: [],
+    // options: {
+    //   topic: [],
+    //   audience: [],
+    //   formatting: [],
+    //   tone: [],
+    //   mood: [],
+    // },
+    options: [],
     wordLimit: 0,
   });
 
@@ -39,13 +43,14 @@ const Essays = () => {
           {lang.user.balance}: <span>{post.balance} </span>
           {post.balance > 1 ? lang.user.tokens : lang.user.token}
         </h3>
-        {!post.wordLimit
-          ? replaceUnderscores(
-              lang.category.essays.noWordLimit,
-              lang.category.essays.predefinedKeys.wordLimit
-            ) // replace ' with "
-          : lang.category.essays.cost}
-        <QuestionIcon />
+        {errorWordLimit ? (
+          replaceUnderscores(
+            lang.category.essays.noWordLimit,
+            lang.category.essays.predefinedKeys.wordLimit
+          )
+        ) : (
+          <h5>{lang.category.essays.cost}</h5>
+        )}
       </div>
 
       {!post.wordLimit ? (
@@ -58,8 +63,8 @@ const Essays = () => {
 
       <div id="curve"></div>
       <ChatForm
-        predefinedVals={lang.category.essays.predefinedVals}
-        predefinedKeys={lang.category.essays.predefinedKeys}
+        vals={lang.category.essays.predefinedVals}
+        keys={lang.category.essays.predefinedKeys}
         post={post}
         setPost={setPost}
         prompt={prompt}
@@ -85,7 +90,7 @@ const EssaysX = styled.section`
     text-align: center;
     position: absolute;
     width: 90%;
-    top: 15%;
+    top: 5%;
     left: 50%;
     transform: translate(-50%, -50%);
 
@@ -101,13 +106,6 @@ const EssaysX = styled.section`
       span {
         color: ${(props) => props.theme.pinkAccent[400]};
       }
-    }
-
-    svg {
-      width: 2rem;
-      height: 2rem;
-      color: ${(props) => props.theme.pinkAccent[200]};
-      opacity: 0.5;
     }
   }
 `;
