@@ -1,44 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SendIcon } from "assets/icons";
 import styled from "styled-components";
 import { ChatInputCheckbox, ChatInputSelect, ChatInputText } from ".";
 
 const ChatForm = ({ prompt, post, setPost, vals, keys }) => {
   const [isCheckbox, setIsCheckbox] = useState(false);
-  // const handleChange = (e) => {
-  //   const { name, value, checked } = e.target;
-  //   if (typeof checked === "boolean") {
-  //     if (checked) {
-  //       setPost((postState) => ({
-  //         ...postState,
-  //         [name]: [...post[name], value],
-  //       }));
-  //     } else {
-  //       const updatedValue = Array.isArray(post[name])
-  //         ? post[name].filter((val) => val !== value)
-  //         : post[name];
-  //       setPost((postState) => ({
-  //         ...postState,
-  //         [name]: updatedValue,
-  //       }));
-  //     }
-  //   } else {
-  //     setPost((postState) => ({
-  //       ...postState,
-  //       [name]: value,
-  //     }));
-  //   }
-  // };
-
-  // working solution without {options: []}
-  // const handleChange = (e) => {
-  //   const { name, value, checked } = e.target;
-
-  //   setPost((prevState) => ({
-  //     ...prevState,
-  //     [name]: checked ? [...post[name], value] : value,
-  //   }));
-  // };
+  // setIstCheckbox(false) if ESC pressed
+  useEffect(() => {
+    const handleEsc = (event) => {
+      if (event.keyCode === 27) {
+        setIsCheckbox(false);
+      }
+    };
+    window.addEventListener("keydown", handleEsc);
+    return () => {
+      window.removeEventListener("keydown", handleEsc);
+    };
+  }, []);
 
   const handleChange = (e) => {
     const { name, title, value, checked } = e.target;
