@@ -1,110 +1,121 @@
 import React, { useState } from "react";
 import { SendIcon } from "assets/icons";
 import styled from "styled-components";
+import { ChatInputCheckbox, ChatInputSelect, ChatInputText } from ".";
 
 const ChatForm = ({
+  prompt,
   post,
   setPost,
   predefinedVals,
   predefinedKeys,
-  totalTokens,
-  balance,
 }) => {
-  const [checkbox, setCheckbox] = useState("");
-  const [value, setValue] = useState("");
+  const [isCheckbox, setIsCheckbox] = useState("");
+  const [errorWordLimit, setErrorWordLimit] = useState(false);
+  // const handleChange = (e) => {
+  //   const { name, value, checked } = e.target;
+  //   if (typeof checked === "boolean") {
+  //     if (checked) {
+  //       setPost((postState) => ({
+  //         ...postState,
+  //         [name]: [...post[name], value],
+  //       }));
+  //     } else {
+  //       const updatedValue = Array.isArray(post[name])
+  //         ? post[name].filter((val) => val !== value)
+  //         : post[name];
+  //       setPost((postState) => ({
+  //         ...postState,
+  //         [name]: updatedValue,
+  //       }));
+  //     }
+  //   } else {
+  //     setPost((postState) => ({
+  //       ...postState,
+  //       [name]: value,
+  //     }));
+  //   }
+  // };
 
-  const handleChangeTextarea = (e) => {
-    setValue(e.target.value);
-    e.target.style.height = "auto";
-    e.target.style.height = `${e.target.scrollHeight}px`;
-    setValue(e.target.value);
+  const handleChange = (e) => {
+    const { name, value, checked } = e.target;
+
+    setPost((prevState) => ({
+      ...prevState,
+      [name]: checked ? [...post[name], value] : value,
+    }));
   };
 
-  const handleChangeInputs = (e, index) => {
-    const { name, value, type, checked, number } = e.target;
-    console.log("🚀 ~ name:", name);
-    if (name === "wordLimit") {
-      console.log("🚀 ~ wordLimit:", "wordLimit");
-    }
-    // const newVal = type === "checkbox" ? checked : value;
-  };
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!post.wordLimit) {
+      setErrorWordLimit(true);
+      return;
+    }
+
+    for (let key in post) {
+      if (post[key].length === 0) continue;
+      prompt += `\n${predefinedKeys[key]}: ${post[key]}`;
+    }
   };
 
   return (
     <ChatFormX onSubmit={handleSubmit}>
-      {checkbox && (
-        <div id="cf-predefined-options-shadow" onClick={() => setCheckbox("")}>
-          asdfsadsdfasdffsadf
-        </div>
+      {isCheckbox && (
+        <div
+          id="cf-predefined-options-shadow"
+          onClick={() => setIsCheckbox("")}
+        ></div>
       )}
 
       <div id="cf-textarea-container">
-        <textarea rows={1} type="text" onChange={handleChangeTextarea} />
+        <textarea name="idea" rows={1} type="text" onChange={handleChange} />
         <button>
           <SendIcon />
         </button>
       </div>
       <div id="cf-predefined-container">
-        {Object.keys(predefinedKeys).map((key) =>
-          key === "language" ? (
-            <select // ---------------------------------- 1 select
-              defaultValue={predefinedVals.language[0]}
-              className="cf-predefined"
-              key={key}
-              name={key}
-              onChange={handleChangeInputs}
-            >
-              {predefinedVals[key].map((lang) => (
-                <option key={lang} value={lang}>
-                  {lang}
-                </option>
-              ))}
-            </select>
-          ) : key === "topic" ||
-            key === "audience" ||
-            key === "formatting" ||
-            key === "tone" ||
-            key === "mood" ? ( // ----------------------- 5 checkboxes
-            <div key={key}>
-              <button
-                className="cf-predefined"
-                onClick={() => setCheckbox(key)}
-              >
-                {predefinedKeys[key]}
-              </button>
-              <div
-                className={
-                  checkbox === key ? "cf-predefined-options-panel" : ""
-                }
-              >
-                {checkbox === key &&
-                  predefinedVals[key].map((option) => (
-                    <label key={option}>
-                      <input
-                        type="checkbox"
-                        name={key}
-                        value={option}
-                        onChange={handleChangeInputs}
-                      />{" "}
-                      {option}
-                    </label>
-                  ))}
-              </div>
-            </div>
-          ) : key === "wordLimit" ? (
-            <input // ---------------------------------- 1 text input
-              onChange={handleChangeInputs}
-              className="cf-predefined"
-              id="cf-wordlimit"
-              key={key}
-              type="number"
-              name={key}
-              placeholder={predefinedKeys[key]}
-            />
-          ) : null
-        )}
+        {Object.keys(predefinedKeys).map((preKey) => {
+          switch (preKey) {
+            case "language":
+              return (
+                <ChatInputSelect
+                  key={preKey}
+                  preKey={preKey}
+                  vals={predefinedVals}
+                  handleChange={handleChange}
+                />
+              );
+            case "topic":
+            case "audience":
+            case "formatting":
+            case "tone":
+            case "mood":
+              return (
+                <ChatInputCheckbox
+                  key={preKey}
+                  preKey={preKey}
+                  vals={predefinedVals}
+                  keys={predefinedKeys}
+                  handleChange={handleChange}
+                  isCheckbox={isCheckbox}
+                  setIsCheckbox={setIsCheckbox}
+                />
+              );
+            case "wordLimit":
+              return (
+                <ChatInputText
+                  key={preKey}
+                  preKey={preKey}
+                  keys={predefinedKeys}
+                  handleChange={handleChange}
+                />
+              );
+            default:
+              return null;
+          }
+        })}
       </div>
     </ChatFormX>
   );

@@ -4,7 +4,7 @@
       "description": "Empower your writing with AI! Our app uses OpenAI and ChatGPT to enhance your writing, correct grammar, answer questions, write codes and more. Get accurate, efficient and high-quality results in no time."
     },
     "user": {
-      "balance": "Current balance",
+      "balance": "Balance",
       "token": "Token",
       "tokens": "Tokens",
       "tokenLimit": "Insufficient Tokens: You need more tokens to submit this.",
@@ -40,7 +40,9 @@
 
         "cost": "Estimated cost of Tokens",
         "noWordLimit": "Before submitting your ideas, please provide the ___ information.",
+        "prompt": "Please compose an essay that meets all the specified mandatory requirements:",
         "predefinedKeys": {
+          "idea": "Main idea",
           "language": "Language",
           "topic": "Topic",
           "audience": "Audience",

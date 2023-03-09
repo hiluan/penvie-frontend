@@ -78,7 +78,7 @@ const GlobalStyle = createGlobalStyle`
 
   }
   ::-webkit-scrollbar {
-    width: 0.5rem;
+    width: 5px;
   }
   /* Track */
   ::-webkit-scrollbar-track {
@@ -86,7 +86,7 @@ const GlobalStyle = createGlobalStyle`
   }
   /* Handle */
   ::-webkit-scrollbar-thumb {
-    background: ${(props) => props.theme.background[100]};
+    background: ${(props) => props.theme.background[300]};
   }
   ::-webkit-scrollbar-track-piece:end {
     background: transparent;

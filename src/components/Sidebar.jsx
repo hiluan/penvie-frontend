@@ -77,12 +77,12 @@ const Sidebar = () => {
         {/* { map all essays/codex/.. } */}
         {memoizedList.map(({ text, _id }, index) => (
           <Link to={`${pathname}/${index}`} className="sb-item-a" key={index}>
+            <div id="sb-fade-block"></div>
             <div className="sb-item-container">
               <DocIcon />
               <span>
                 {text} {index}
               </span>
-              <div id="sb-fade-block"></div>
               <div>
                 <PenIcon />
                 <TrashIcon />
@@ -126,15 +126,18 @@ const SideBarHr = styled.hr`
 `;
 
 const SidebarX = styled.nav`
-  height: 100vh;
+  height: calc(100vh - 1rem);
   width: 250px;
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;
   padding: 0.5rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  border-radius: 0.5rem;
 
   color: ${(props) => props.theme.grey[900]};
-  background-color: ${(props) => props.theme.background[50]};
+  background-color: ${(props) => props.theme.background[200]};
   /*   For later:
               borderRadius: isNonMobile ? "9px" : "0",
               borderWidth: isNonMobile ? 0 : "3px",
@@ -148,10 +151,10 @@ const SidebarX = styled.nav`
     justify-content: center;
     height: 100%;
     color: ${(props) => props.theme.grey[900]};
-    background-color: ${(props) => props.theme.background[50]};
+    background-color: ${(props) => props.theme.background[200]};
     border-radius: 0.3rem;
     &:hover {
-      background-color: ${(props) => props.theme.background[100]};
+      background-color: ${(props) => props.theme.background[300]};
       transition: all ease 0.3s;
     }
   }
@@ -165,7 +168,7 @@ const SidebarX = styled.nav`
       padding: 0.4rem 0;
       /* padding: 0.75rem 0; */
       margin: 0.25rem 0;
-      border: 1px solid ${(props) => props.theme.background[200]};
+      border: 1px solid ${(props) => props.theme.background[300]};
     }
 
     #sidebar-home-btn {
@@ -222,7 +225,7 @@ const SidebarX = styled.nav`
 
     &:hover {
       overflow-y: scroll;
-      margin-right: -0.5rem;
+      margin-right: -5px;
     }
     .sb-item-a {
       padding: 1.5rem 0;
@@ -233,11 +236,11 @@ const SidebarX = styled.nav`
       margin-top: 0.5rem;
       /* margin-bottom: 3rem; */
       padding: 0.25rem 1rem;
-      border: 1px solid ${(props) => props.theme.background[200]};
-      background-color: ${(props) => props.theme.background[100]};
+      border: 1px solid ${(props) => props.theme.background[400]};
+      background-color: ${(props) => props.theme.background[200]};
       margin: 0 auto;
       &:hover {
-        background-color: ${(props) => props.theme.background[200]};
+        background-color: ${(props) => props.theme.background[100]};
       }
     }
 
@@ -249,7 +252,7 @@ const SidebarX = styled.nav`
       height: 100%;
       background: linear-gradient(
         to left,
-        ${(props) => props.theme.background[50]},
+        ${(props) => props.theme.background[200]},
         transparent
       );
     }
