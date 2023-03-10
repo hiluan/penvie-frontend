@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { QuestionIcon } from "assets/icons";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {
   ChatContent,
@@ -9,10 +8,13 @@ import {
 } from "components/chat";
 import translations from "../../languages/translations.json";
 import styled from "styled-components";
+import { ReplaceUnderscores } from "components/utils";
 
 const Essays = () => {
+  // 500 words is an A4 page = 1000 tokens
+  //
   const [hasContent, setHasContent] = useState(false);
-  const [errorWordLimit, setErrorWordLimit] = useState(false);
+  const [tokens, setTokens] = useState(0);
   const { language } = useSelector((state) => state.global);
   const lang = translations[language];
   let { prompt } = lang.category.essays;
@@ -26,16 +28,22 @@ const Essays = () => {
       tone: [],
       mood: [],
     },
-    // options: [],
     wordLimit: 0,
   });
 
-  // put the "Word limit" in a <span>
-  function replaceUnderscores(message, text) {
-    const replacedMessage = message.replace(/___/g, `"<span>${text}</span>"`);
-    return <h5 dangerouslySetInnerHTML={{ __html: replacedMessage }}></h5>;
-  }
+  useEffect(() => {
+    setTokens(post.wordLimit * 2);
+  }, [post.wordLimit]);
 
+  const length = () => {
+    const page = Math.floor(post.wordLimit / 500); // 500 words/a4 page
+    const rest = post.wordLimit / 500 - page;
+
+    if (rest < 0.25) return `${page}.25`;
+    if (0.25 < rest && rest < 0.5) return `${page}.5`;
+    if (0.5 < rest && rest < 0.75) return `${page}.75`;
+    if (0.75 < rest) return `${page}`;
+  };
   return (
     <EssaysX>
       <div id="es-title">
@@ -43,24 +51,13 @@ const Essays = () => {
           {lang.user.balance}: <span>{post.balance} </span>
           {post.balance > 1 ? lang.user.tokens : lang.user.token}
         </h3>
-        {errorWordLimit ? (
-          replaceUnderscores(
-            lang.category.essays.noWordLimit,
-            lang.category.essays.predefinedKeys.wordLimit
-          )
-        ) : (
-          <h5>{lang.category.essays.cost}</h5>
-        )}
+        <div>
+          {ReplaceUnderscores(lang.category.essays.cost, tokens)}
+          {post.wordLimit &&
+            ReplaceUnderscores(lang.category.essays.length, length())}
+        </div>
       </div>
-
-      {!post.wordLimit ? (
-        <ChatEmpty />
-      ) : !hasContent ? (
-        <ChatEssaysEg />
-      ) : (
-        <ChatContent />
-      )}
-
+      {!hasContent ? <ChatEmpty /> : <ChatContent />}
       <div id="curve"></div>
       <ChatForm
         vals={lang.category.essays.predefinedVals}
@@ -99,13 +96,14 @@ const EssaysX = styled.section`
       font-weight: 400;
     }
 
+    div {
+      position: absolute;
+      top: 2rem;
+    }
     h5 {
       color: ${(props) => props.theme.grey[300]};
       font-weight: 300;
       margin: 0.5rem 0;
-      span {
-        color: ${(props) => props.theme.pinkAccent[400]};
-      }
     }
   }
 `;

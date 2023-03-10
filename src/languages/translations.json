@@ -38,7 +38,8 @@
         "title": "Essays",
         "subtitle": "Craft, refine, and polish your essays in any language with our powerful writing and editing AI.",
 
-        "cost": "Estimated cost: ___ Tokens",
+        "cost": "Estimated cost: around ___ tokens",
+        "length": "Length: around ___ A4 page(s)",
         "noWordLimit": "Before submitting your ideas, please provide the ___ information.",
         "prompt": "Please compose an essay that meets all the specified mandatory requirements:",
         "predefinedKeys": {

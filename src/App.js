@@ -5,13 +5,13 @@ import { ThemeProvider } from "styled-components";
 import { themes } from "theme";
 import LanguageDetector from "languages/LanguageDetector";
 import GlobalStyle from "styled/global";
-import StatePageUpdater from "components/StatePageUpdater";
 import Home from "./scenes/home";
 import Layout from "./scenes/layout";
 import Essays from "./scenes/essays";
 import GrammarCorrection from "scenes/grammarCorrection";
 import QA from "scenes/qa";
 import Codex from "scenes/codex";
+import { StatePageUpdater } from "components/utils";
 
 function App() {
   const { mode } = useSelector((state) => state.global);

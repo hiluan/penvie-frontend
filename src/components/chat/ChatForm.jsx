@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import { SendIcon } from "assets/icons";
 import styled from "styled-components";
 import { ChatInputCheckbox, ChatInputSelect, ChatInputText } from ".";
+import ChatErrorWordLimit from "./ChatErrorWordLimit";
 
 const ChatForm = ({ prompt, post, setPost, vals, keys }) => {
   const [isCheckbox, setIsCheckbox] = useState(false);
+  const [isWordlimit, setIsWordlimit] = useState(false);
+
   // setIstCheckbox(false) if ESC pressed
   useEffect(() => {
     const handleEsc = (event) => {
@@ -20,6 +23,11 @@ const ChatForm = ({ prompt, post, setPost, vals, keys }) => {
 
   const handleChange = (e) => {
     const { name, title, value, checked } = e.target;
+    // handle textarea to stretch to fit its content stackoverflow.com/questions/2803880/;
+    if (name === "idea") {
+      e.target.style.height = "";
+      e.target.style.height = e.target.scrollHeight + "px";
+    }
 
     if (name === "options") {
       const updatedOptions = { ...post.options };
@@ -45,12 +53,10 @@ const ChatForm = ({ prompt, post, setPost, vals, keys }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!post.wordLimit)
-      return (
-        <div>
-          <h4>please word</h4>
-        </div>
-      );
+    if (!post.wordLimit) {
+      setIsWordlimit(true);
+      return;
+    }
 
     for (let key in post) {
       if (post[key].length === 0) continue;
@@ -69,12 +75,23 @@ const ChatForm = ({ prompt, post, setPost, vals, keys }) => {
 
   return (
     <ChatFormX onSubmit={handleSubmit}>
-      {isCheckbox && (
+      {(isCheckbox || isWordlimit) && (
         <div
-          id="cf-predefined-options-shadow"
-          onClick={() => setIsCheckbox(false)}
+          id={
+            isWordlimit
+              ? "cf-predefined-options-error"
+              : isCheckbox
+              ? "cf-predefined-options-shadow"
+              : ""
+          }
+          onClick={() => {
+            setIsWordlimit(false);
+            setIsCheckbox(false);
+          }}
         ></div>
       )}
+
+      {isWordlimit && <ChatErrorWordLimit setIsWordlimit={setIsWordlimit} />}
 
       <div id="cf-textarea-container">
         <textarea name="idea" rows={1} type="text" onChange={handleChange} />
@@ -113,6 +130,7 @@ const ChatForm = ({ prompt, post, setPost, vals, keys }) => {
                   preKey={preKey}
                   keys={keys}
                   handleChange={handleChange}
+                  isEmpty={post.wordLimit}
                 />
               );
             default:
@@ -162,17 +180,13 @@ const ChatFormX = styled.form`
     flex-grow: 1;
     margin: 1rem 0;
     border-radius: 0.375rem;
-
     position: relative;
-    /* display: flex; */
-    /* justify-content: center; */
-    /* align-items: center; */
     max-width: 90%;
     width: 600px;
 
     textarea {
       width: 100%;
-      max-height: 160px;
+      max-height: 320px;
       padding: 0.9rem 2.5rem 0.9rem 0.75rem;
       border-radius: 0.375rem;
       border: none;
@@ -185,6 +199,7 @@ const ChatFormX = styled.form`
       box-shadow: inset 0px 0px 0px 0.8px
           ${(props) => props.theme.pinkAccent[500]},
         0 0 10px 2px rgba(0, 0, 0, 0.1);
+
       transition: box-shadow ease 0.3s, background-color ease 0.3s,
         border ease 0.3s;
       &:hover {
@@ -210,14 +225,20 @@ const ChatFormX = styled.form`
       width: 2rem;
       height: 2rem;
       border-radius: 0.375rem;
-      color: ${(props) => props.theme.grey[400]};
       margin: 0 0.375rem 0.375rem 0.375rem;
-      background-color: transparent;
       outline: none;
       border: none;
+      color: ${(props) => props.theme.grey[400]};
+      background-color: ${(props) => props.theme.pinkAccent[200]};
+      /* background-color: transparent; */
+      display: flex;
+      justify-content: center;
+      align-items: center;
       &:hover {
-        background-color: ${(props) => props.theme.background[10]};
-        color: ${(props) => props.theme.grey[600]};
+        background-color: ${(props) => props.theme.pinkAccent[500]};
+        svg {
+          color: white;
+        }
       }
     }
   }
@@ -243,26 +264,6 @@ const ChatFormX = styled.form`
       }
     }
 
-    #cf-wordlimit {
-      color: ${(props) => props.theme.grey[700]};
-      box-shadow: inset 0px 0px 0px 0.6px
-        ${(props) => props.theme.pinkAccent[500]};
-
-      &:hover {
-        box-shadow: inset 0px 0px 0px 1px
-          ${(props) => props.theme.pinkAccent[300]};
-      }
-
-      &:focus,
-      &:active {
-        box-shadow: none;
-        background-color: ${(props) => props.theme.background[10]};
-      }
-
-      &::placeholder {
-        color: ${(props) => props.theme.grey[200]};
-      }
-    }
     select {
     }
     button {
@@ -277,54 +278,18 @@ const ChatFormX = styled.form`
     right: 0;
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.7);
-    z-index: 5;
     backdrop-filter: blur(3px);
+    z-index: 5;
+  }
+
+  #cf-predefined-options-error {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 5;
   }
 `;
 
 export default ChatForm;
-
-{
-  /* <div id="cf-predefined-container">
-  {Object.keys(keys).map((preKey) => {
-    switch (preKey) {
-      case "language":
-        return (
-          <ChatInputSelect
-            key={preKey}
-            preKey={preKey}
-            vals={vals}
-            handleChange={handleChange}
-          />
-        );
-      case "topic":
-      case "audience":
-      case "formatting":
-      case "tone":
-      case "mood":
-        return (
-          <ChatInputCheckbox
-            key={preKey}
-            preKey={preKey}
-            vals={vals}
-            keys={keys}
-            handleChange={handleChange}
-            isCheckbox={isCheckbox}
-            setIsCheckbox={setIsCheckbox}
-          />
-        );
-      case "wordLimit":
-        return (
-          <ChatInputText
-            key={preKey}
-            preKey={preKey}
-            keys={keys}
-            handleChange={handleChange}
-          />
-        );
-      default:
-        return null;
-    }
-  })}
-</div>; */
-}

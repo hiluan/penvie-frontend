@@ -51,6 +51,10 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Roboto', sans-serif;
     font-size: 1.2rem;
     color: ${(props) => props.theme.grey[700]};
+    span {
+        color: ${(props) => props.theme.pinkAccent[400]};
+        font-weight: 800;
+      }
   }
 
   h6 {
