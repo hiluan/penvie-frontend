@@ -5,6 +5,7 @@ import { Outlet } from "react-router-dom";
 import Navbar from "components/Navbar";
 import Sidebar from "components/Sidebar";
 import styled from "styled-components";
+import SigninForm from "components/auth/SignInForm";
 
 const Layout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -12,6 +13,7 @@ const Layout = () => {
   // const userId = useSelector((state) => state.global.userId);
   // const { data } = useGetUserQuery(userId);
   const { page } = useSelector((state) => state.global);
+
   return (
     <LayoutContainer>
       {page !== "/" && (

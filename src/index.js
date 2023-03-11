@@ -7,13 +7,16 @@ import { apiEssays } from "state/apiEssays";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import { setupListeners } from "@reduxjs/toolkit/query";
+import { apiChat } from "state/apiChat";
 
 const store = configureStore({
   reducer: {
     global: globalReducer,
     [apiEssays.reducerPath]: apiEssays.reducer,
+    [apiChat.reducerPath]: apiChat.reducer,
   },
-  middleware: (getDefault) => getDefault().concat(apiEssays.middleware),
+  middleware: (getDefault) =>
+    getDefault().concat(apiEssays.middleware).concat(apiChat.middleware),
 });
 setupListeners(store.dispatch);
 

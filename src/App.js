@@ -12,6 +12,9 @@ import GrammarCorrection from "scenes/grammarCorrection";
 import QA from "scenes/qa";
 import Codex from "scenes/codex";
 import { StatePageUpdater } from "components/utils";
+import SignInForm from "components/auth/SignInForm";
+import Userfront from "@userfront/react";
+import ChatGPT from "scenes/chatGPT";
 
 function App() {
   const { mode } = useSelector((state) => state.global);
@@ -30,7 +33,14 @@ function App() {
             <Routes>
               {/* every routes in here will have the navbar & sidebar:  */}
               <Route element={<Layout />}>
-                <Route path="/" element={<Home />} />
+                <Route
+                  path="/"
+                  element={
+                    // Userfront.accessToken() ? <SignInForm /> :
+                    <Home />
+                  }
+                />
+                <Route path="/chatgpt" element={<ChatGPT />} />
                 <Route path="/essays" element={<Essays />} />
                 <Route
                   path="/grammar-correction"
@@ -38,6 +48,8 @@ function App() {
                 />
                 <Route path="/qa" element={<QA />} />
                 <Route path="/codex" element={<Codex />} />
+                {/* <Route path="/*signin" element={<SignInForm />} /> */}
+                {/* <Route path="/signin" element={<SignInForm />} /> */}
               </Route>
             </Routes>
           </StatePageUpdater>

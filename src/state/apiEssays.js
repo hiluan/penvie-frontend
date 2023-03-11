@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const apiEssays = createApi({
-  reducerPath: "adminApi",
+  reducerPath: "apiEssays",
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.REACT_APP_BASE_URL,
   }),
@@ -66,11 +66,11 @@ export const apiEssays = createApi({
 });
 
 export const {
-  newEssay,
-  getEssays,
-  deleteEssays,
-  getEssay,
-  deleteEssay,
-  newEssayChat,
-  getEssayChats,
+  useNewEssayMutation,
+  useGetEssaysQuery,
+  useDeleteEssaysMutation,
+  useGetEssayQuery,
+  useDeleteEssayMutation,
+  useNewEssayChatMutation,
+  useGetEssayChatsQuery,
 } = apiEssays;

@@ -10,6 +10,8 @@ import {
 import translations from "../../languages/translations.json";
 import styled from "styled-components";
 import { createRef, useEffect, useRef } from "react";
+import Userfront from "@userfront/react";
+import SignInForm from "components/auth/SignInForm";
 // Set current language for based on user's browser
 
 const Home = () => {
@@ -68,6 +70,10 @@ const Home = () => {
         <h1>{lang.home.title}</h1>
         <p>{lang.home.subtitle}</p>
       </div>
+      {/* {Userfront.accessToken() ? (
+        <SignInForm />
+      ) : ( */}
+
       <div className="grid-categories">
         {categories.map(
           ({ title, subtitle, icon, link, background }, index) => (
@@ -83,6 +89,8 @@ const Home = () => {
           )
         )}
       </div>
+      {/* )} */}
+      {/* <SignInForm /> */}
     </HomeX>
   );
 };
@@ -220,5 +228,11 @@ const HomeX = styled.section`
       grid-column: auto/span 2;
       grid-row: auto/span 2; */
     /* } */
+  }
+
+  #userfront-raamdrr {
+    position: absolute;
+    top: 0;
+    z-index: 10;
   }
 `;

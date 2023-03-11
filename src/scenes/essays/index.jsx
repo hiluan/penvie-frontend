@@ -9,8 +9,11 @@ import {
 import translations from "../../languages/translations.json";
 import styled from "styled-components";
 import { ReplaceUnderscores } from "components/utils";
+import { useNewEssayMutation } from "state/apiEssays";
 
 const Essays = () => {
+  const [trigger] = useNewEssayMutation();
+
   // 500 words is an A4 page = 1000 tokens
   //
   const [hasContent, setHasContent] = useState(false);
@@ -38,24 +41,25 @@ const Essays = () => {
   const length = () => {
     const page = Math.floor(post.wordLimit / 500); // 500 words/a4 page
     const rest = post.wordLimit / 500 - page;
-
     if (rest < 0.25) return `${page}.25`;
     if (0.25 < rest && rest < 0.5) return `${page}.5`;
     if (0.5 < rest && rest < 0.75) return `${page}.75`;
     if (0.75 < rest) return `${page}`;
   };
+
   return (
     <EssaysX>
       <div id="es-title">
         <h3>
-          {lang.user.balance}: <span>{post.balance} </span>
+          {lang.user.balance}: <span>{post.balance}</span>
           {post.balance > 1 ? lang.user.tokens : lang.user.token}
         </h3>
-        <div>
-          {ReplaceUnderscores(lang.category.essays.cost, tokens)}
-          {post.wordLimit &&
-            ReplaceUnderscores(lang.category.essays.length, length())}
-        </div>
+        {!!post.wordLimit && (
+          <div>
+            {ReplaceUnderscores(lang.category.essays.cost, tokens)}
+            {ReplaceUnderscores(lang.category.essays.length, length())}
+          </div>
+        )}
       </div>
       {!hasContent ? <ChatEmpty /> : <ChatContent />}
       <div id="curve"></div>
@@ -65,6 +69,7 @@ const Essays = () => {
         post={post}
         setPost={setPost}
         prompt={prompt}
+        trigger={trigger}
       />
     </EssaysX>
   );

@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { ChatInputCheckbox, ChatInputSelect, ChatInputText } from ".";
 import ChatErrorWordLimit from "./ChatErrorWordLimit";
 
-const ChatForm = ({ prompt, post, setPost, vals, keys }) => {
+const ChatForm = ({ trigger, prompt, post, setPost, vals, keys }) => {
   const [isCheckbox, setIsCheckbox] = useState(false);
   const [isWordlimit, setIsWordlimit] = useState(false);
 
@@ -52,12 +52,20 @@ const ChatForm = ({ prompt, post, setPost, vals, keys }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!post.idea.length) return;
 
-    if (!post.wordLimit) {
+    // check word limit for essays
+    if (post.wordLimit !== undefined && !post.wordLimit) {
       setIsWordlimit(true);
       return;
     }
 
+    const date = new Date()
+      .toISOString()
+      .replace("T", " ")
+      .replace("Z", `${Math.floor(Math.random() * 1000)}+00:00`);
+
+    // add all info in the post{} into a string.
     for (let key in post) {
       if (post[key].length === 0) continue;
       if (key !== "options") {
@@ -70,7 +78,12 @@ const ChatForm = ({ prompt, post, setPost, vals, keys }) => {
         }
       }
     }
-    console.log("🚀 ~ prompt:", prompt);
+
+    post["created"] = date;
+
+    // send request to the backend
+    trigger(post);
+    console.log("🚀 ~ post:", post.idea);
   };
 
   return (
@@ -88,6 +101,7 @@ const ChatForm = ({ prompt, post, setPost, vals, keys }) => {
             setIsWordlimit(false);
             setIsCheckbox(false);
           }}
+          style={{ opacity: isCheckbox || isWordlimit ? 1 : 0.3 }}
         ></div>
       )}
 
@@ -280,6 +294,7 @@ const ChatFormX = styled.form`
     background-color: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(3px);
     z-index: 5;
+    transition: opacity ease 1s;
   }
 
   #cf-predefined-options-error {

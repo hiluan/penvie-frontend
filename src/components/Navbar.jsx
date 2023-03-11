@@ -23,9 +23,9 @@ const Navbar = () => {
         <Link to="#" onClick={() => dispatch(setMode())}>
           {mode === "dark" ? <Moon /> : <Sun />}
         </Link>
-        <Link to="#">
+        {/* <Link to="#">
           <Logout />
-        </Link>
+        </Link> */}
       </div>
     </NavbarX>
   );
