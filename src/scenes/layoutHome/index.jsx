@@ -5,9 +5,8 @@ import { Outlet } from "react-router-dom";
 import Navbar from "components/Navbar";
 import Sidebar from "components/Sidebar";
 import styled from "styled-components";
-import SigninForm from "components/auth/SignInForm";
 
-const Layout = () => {
+const LayoutHome = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   // const isNonMobile = useMediaQuery("(min-width: 600px)");
   // const userId = useSelector((state) => state.global.userId);
@@ -54,4 +53,4 @@ const LayoutContainer = styled.section`
   } */
 `;
 
-export default Layout;
+export default LayoutHome;

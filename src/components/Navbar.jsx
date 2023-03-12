@@ -56,15 +56,14 @@ const NavbarX = styled.nav`
       width: 2rem;
       height: 2rem;
       border-radius: 50%;
-      background-color: ${(props) => props.theme.background[0]};
       color: ${(props) => props.theme.grey[500]};
-      transition: background-color ease 0.3s, color ease 0.3s,
-        box-shadow 0.3s ease;
+      background-color: ${(props) => props.theme.background[10]};
+      transition: box-shadow 0.3s ease, filter 0.3s ease;
       box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.1);
+
       &:hover {
-        background-color: ${(props) => props.theme.background[50]};
-        color: ${(props) => props.theme.grey[700]};
         box-shadow: none;
+        filter: brightness(1.3);
       }
     }
   }

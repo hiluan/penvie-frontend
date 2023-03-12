@@ -169,8 +169,13 @@
       "newChat": "New"
     },
     "home": {
-      "title": "AI WRITING ASSISTANT",
+      "title": "AI ASSISTANT",
       "subtitle": "Powered by OpenAi's ChatGPT",
+      "signin": "sign in with",
+      "notice": "By signing in, you agree to our",
+      "terms": "Terms of Service",
+      "and": "and",
+      "privacy": "Privacy Policy",
       "welcomeMessage": "Welcome to our app!",
       "getStartedButton": "Get started"
     },

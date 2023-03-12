@@ -1,24 +1,36 @@
 // import { themeSettings } from "theme";
 import { useSelector } from "react-redux";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  Router,
+  Routes,
+} from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import { themes } from "theme";
 import LanguageDetector from "languages/LanguageDetector";
 import GlobalStyle from "styled/global";
 import Home from "./scenes/home";
-import Layout from "./scenes/layout";
+import LayoutHome from "./scenes/layoutHome";
 import Essays from "./scenes/essays";
-import GrammarCorrection from "scenes/grammarCorrection";
+import Grammar from "scenes/grammar";
 import QA from "scenes/qa";
 import Codex from "scenes/codex";
 import { StatePageUpdater } from "components/utils";
-import SignInForm from "components/auth/SignInForm";
 import Userfront from "@userfront/react";
 import ChatGPT from "scenes/chatGPT";
+import LayoutProtected from "scenes/layoutProtected";
+import SignIn from "components/auth/SignIn";
 
 function App() {
   const { mode } = useSelector((state) => state.global);
   const theme = themes[mode];
+
+  // if (!Userfront.accessToken()) {
+  //   return <Navigate to="/signin" replace={true} />;
+  // }
+  // {!Userfront.accessToken() && <Navigate to="/signin" replace={true} />}
 
   return (
     <ThemeProvider theme={theme}>
@@ -31,25 +43,18 @@ function App() {
           <LanguageDetector />
           <StatePageUpdater>
             <Routes>
-              {/* every routes in here will have the navbar & sidebar:  */}
-              <Route element={<Layout />}>
-                <Route
-                  path="/"
-                  element={
-                    // Userfront.accessToken() ? <SignInForm /> :
-                    <Home />
-                  }
-                />
+              <Route element={<LayoutHome />}>
+                <Route path="/" element={<Home />} />
+                {/* <Route path="/signin" element={<LoginPage />} /> */}
+              </Route>
+
+              <Route element={<LayoutProtected />}>
+                <Route path="/" element={<Home />} />
                 <Route path="/chatgpt" element={<ChatGPT />} />
-                <Route path="/essays" element={<Essays />} />
-                <Route
-                  path="/grammar-correction"
-                  element={<GrammarCorrection />}
-                />
-                <Route path="/qa" element={<QA />} />
-                <Route path="/codex" element={<Codex />} />
-                {/* <Route path="/*signin" element={<SignInForm />} /> */}
-                {/* <Route path="/signin" element={<SignInForm />} /> */}
+                {/* <Route path="/essays" element={<Essays />} /> */}
+                {/* <Route path="/grammar" element={<Grammar />} /> */}
+                {/* <Route path="/qa" element={<QA />} /> */}
+                {/* <Route path="/codex" element={<Codex />} /> */}
               </Route>
             </Routes>
           </StatePageUpdater>

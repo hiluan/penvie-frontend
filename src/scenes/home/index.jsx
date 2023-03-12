@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   CodeIcon,
   EssayIcon,
@@ -11,14 +11,31 @@ import translations from "../../languages/translations.json";
 import styled from "styled-components";
 import { createRef, useEffect, useRef } from "react";
 import Userfront from "@userfront/react";
-import SignInForm from "components/auth/SignInForm";
+import SignIn from "components/auth/SignIn";
 // Set current language for based on user's browser
+
+const Services = ({ services, growRefs }) => {
+  return (
+    <div className="grid-services">
+      {services.map(({ title, subtitle, icon, link, background }, index) => (
+        <div key={index} ref={growRefs.current[index]}>
+          <Link to={link} className="grid-category-icon">
+            <div className={`${background}`}>{icon}</div>
+          </Link>
+          <div className={`${background} grid-category-sub`}>
+            <h5>{title}</h5>
+            <p>{subtitle}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
 
 const Home = () => {
   const { mode, language } = useSelector((state) => state.global);
-  const navigate = useNavigate();
   const lang = translations[language];
-  const categories = [
+  const services = [
     {
       title: lang.category.essays.title,
       subtitle: lang.category.essays.subtitle,
@@ -50,7 +67,7 @@ const Home = () => {
   ];
 
   // create GROW animation, must use this to have the effect in all map items
-  const growRefs = useRef(categories.map(() => createRef()));
+  const growRefs = useRef(services.map(() => createRef()));
   useEffect(() => {
     growRefs.current.forEach((ref) => {
       if (ref.current) {
@@ -71,26 +88,14 @@ const Home = () => {
         <p>{lang.home.subtitle}</p>
       </div>
       {/* {Userfront.accessToken() ? (
-        <SignInForm />
+        <SignIn />
       ) : ( */}
-
-      <div className="grid-categories">
-        {categories.map(
-          ({ title, subtitle, icon, link, background }, index) => (
-            <div key={index} ref={growRefs.current[index]}>
-              <Link to={link} className="grid-category-icon">
-                <div className={`${background}`}>{icon}</div>
-              </Link>
-              <div className={`${background} grid-category-sub`}>
-                <h5>{title}</h5>
-                <p>{subtitle}</p>
-              </div>
-            </div>
-          )
-        )}
-      </div>
+      {Userfront.accessToken() ? (
+        <Services growRefs={growRefs} services={services} />
+      ) : (
+        <SignIn lang={lang} growRefs={growRefs} />
+      )}
       {/* )} */}
-      {/* <SignInForm /> */}
     </HomeX>
   );
 };
@@ -127,7 +132,7 @@ const HomeX = styled.section`
     }
   }
 
-  .grid-categories {
+  .grid-services {
     display: grid;
     grid-gap: 1rem;
     grid-template-columns: 1fr; /* Default value for all screen sizes */
@@ -204,21 +209,21 @@ const HomeX = styled.section`
 
   /* On screens larger than lg size, set grid columns to 4 */
   @media (min-width: 1024px) {
-    .grid-categories {
+    .grid-services {
       grid-template-columns: repeat(4, 1fr);
     }
   }
 
   /* On screens larger than sm size, set grid columns to 3 */
   @media (min-width: 640px) {
-    .grid-categories {
+    .grid-services {
       grid-template-columns: repeat(3, 1fr);
     }
   }
 
   /* On screens larger than xs size, set grid columns to 2 */
   @media screen and (min-width: 480px) {
-    .grid-categories {
+    .grid-services {
       grid-template-columns: repeat(2, 1fr);
     }
   }

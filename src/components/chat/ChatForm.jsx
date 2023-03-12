@@ -83,7 +83,7 @@ const ChatForm = ({ trigger, prompt, post, setPost, vals, keys }) => {
 
     // send request to the backend
     trigger(post);
-    console.log("🚀 ~ post:", post.idea);
+    // console.log("🚀 ~ post:", post.idea);
   };
 
   return (
