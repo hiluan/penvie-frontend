@@ -9,15 +9,12 @@ import styled from "styled-components";
 const LayoutProtected = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   // const isNonMobile = useMediaQuery("(min-width: 600px)");
-  // const userId = useSelector((state) => state.global.userId);
-  // const { data } = useGetUserQuery(userId);
   const { page } = useSelector((state) => state.global);
 
   return (
     <LayoutContainer>
       {page !== "/" && (
         <Sidebar
-          // user={data || {}} // if request gets undefined -> return just {}
           isSidebarOpen={isSidebarOpen}
           setIsSidebarOpen={setIsSidebarOpen}
         />
@@ -25,7 +22,6 @@ const LayoutProtected = () => {
       <div id="outlet-container">
         {page === "/" && (
           <Navbar
-            // user={data || {}}
             isSidebarOpen={isSidebarOpen}
             setIsSidebarOpen={setIsSidebarOpen}
           />
@@ -37,7 +33,6 @@ const LayoutProtected = () => {
 };
 
 const LayoutContainer = styled.section`
-  /* display: ${(props) => (props.isNonMobile ? "flex" : "block")}; */
   display: flex;
   width: 100%;
   height: 100%;

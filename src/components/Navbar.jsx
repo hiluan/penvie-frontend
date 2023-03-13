@@ -1,31 +1,37 @@
 import { Logout, Moon, PenLogo, Sun, UserIcon } from "assets/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { setMode } from "../state";
+import { setMode, setSignedIn } from "../state";
 import { themes } from "../theme";
 import styled from "styled-components";
+import Userfront from "@userfront/react";
+Userfront.init(process.env.REACT_APP_USERFRONT_ACCOUNT_ID);
 
 const Navbar = () => {
   const dispatch = useDispatch();
-  const { mode, language } = useSelector((state) => state.global);
+  const { mode, language, signedIn } = useSelector((state) => state.global);
   const theme = themes[mode];
 
   return (
     <NavbarX>
       <Link id="navbar-left" to="/">
-        {/* <h1 style={{ color: theme.primary[900] }}>Penvie</h1> */}
         <PenLogo />
       </Link>
       <div id="navbar-right">
-        <Link to="#">
-          <UserIcon />
-        </Link>
+        {!signedIn ? undefined : ( // </Link> //   <UserIcon /> // <Link to="#">
+          <Link
+            to="#"
+            onClick={() => {
+              dispatch(setSignedIn(false));
+              Userfront.logout();
+            }}
+          >
+            <Logout />
+          </Link>
+        )}
         <Link to="#" onClick={() => dispatch(setMode())}>
           {mode === "dark" ? <Moon /> : <Sun />}
         </Link>
-        {/* <Link to="#">
-          <Logout />
-        </Link> */}
       </div>
     </NavbarX>
   );

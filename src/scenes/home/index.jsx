@@ -14,27 +14,7 @@ import Userfront from "@userfront/react";
 import SignIn from "components/auth/SignIn";
 // Set current language for based on user's browser
 
-const Services = ({ services, growRefs }) => {
-  return (
-    <div className="grid-services">
-      {services.map(({ title, subtitle, icon, link, background }, index) => (
-        <div key={index} ref={growRefs.current[index]}>
-          <Link to={link} className="grid-category-icon">
-            <div className={`${background}`}>{icon}</div>
-          </Link>
-          <div className={`${background} grid-category-sub`}>
-            <h5>{title}</h5>
-            <p>{subtitle}</p>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-};
-
-const Home = () => {
-  const { mode, language } = useSelector((state) => state.global);
-  const lang = translations[language];
+const Services = ({ lang }) => {
   const services = [
     {
       title: lang.category.essays.title,
@@ -75,6 +55,26 @@ const Home = () => {
       }
     });
   }, []);
+  return (
+    <div className="grid-services">
+      {services.map(({ title, subtitle, icon, link, background }, index) => (
+        <div key={index} ref={growRefs.current[index]}>
+          <Link to={link} className="grid-category-icon">
+            <div className={`${background}`}>{icon}</div>
+          </Link>
+          <div className={`${background} grid-category-sub`}>
+            <h5>{title}</h5>
+            <p>{subtitle}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const Home = () => {
+  const { mode, language, signedIn } = useSelector((state) => state.global);
+  const lang = translations[language];
 
   return (
     <HomeX
@@ -87,15 +87,8 @@ const Home = () => {
         <h1>{lang.home.title}</h1>
         <p>{lang.home.subtitle}</p>
       </div>
-      {/* {Userfront.accessToken() ? (
-        <SignIn />
-      ) : ( */}
-      {Userfront.accessToken() ? (
-        <Services growRefs={growRefs} services={services} />
-      ) : (
-        <SignIn lang={lang} growRefs={growRefs} />
-      )}
-      {/* )} */}
+
+      {signedIn ? <Services lang={lang} /> : <SignIn lang={lang} />}
     </HomeX>
   );
 };
@@ -123,6 +116,7 @@ const HomeX = styled.section`
       font-family: "Open Sans", sans-serif;
       color: ${(props) => props.theme.grey[700]};
       font-weight: lighter;
+      font-size: 3rem;
       margin-top: 1rem;
     }
 

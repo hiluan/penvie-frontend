@@ -1,36 +1,75 @@
 import { useDispatch, useSelector } from "react-redux";
-import { themes } from "theme";
 import {
   Sun,
   Moon,
   Logout,
   DocIcon,
   PenIcon,
-  PenLogo,
   PlusIcon,
   TrashIcon,
   UserIcon,
 } from "assets/icons";
-import { setMode } from "state";
+import { setMode, setSignedIn } from "state";
 import { Link, useLocation } from "react-router-dom";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import translations from "../languages/translations.json";
 import styled from "styled-components";
+import Userfront from "@userfront/react";
 
-const Sidebar = () => {
-  const dispatch = useDispatch();
+Userfront.init(process.env.REACT_APP_USERFRONT_ACCOUNT_ID);
+
+const SidebarTop = ({ lang }) => {
+  return (
+    <div id="sidebar-top">
+      {/* save this for more services LATER
+      <Link to="/" id="sidebar-home-btn">
+        <PenLogo />
+      </Link> */}
+      <Link to="#" id="sidebar-new-btn">
+        <PlusIcon />
+        {lang.sidebar.newChat}
+      </Link>
+    </div>
+  );
+};
+
+const SidebarMid = ({ lang }) => {
   const testItems = new Array(20).fill({ text: "This is the Chat number" });
   const [list, setList] = useState(testItems);
-  const [active, setActive] = useState("");
+  const memoizedList = useMemo(() => [...list], [testItems]);
   const { pathname } = useLocation();
-  const { mode, language } = useSelector((state) => state.global);
-  const theme = themes[mode];
-  const lang = translations[language];
 
-  useEffect(() => {
-    setActive(pathname.substring(1)); // anytime url changes, set the active to the current page
-  }, [pathname]);
+  const handleShowMore = () => {
+    setList([...list, ...testItems]);
+  };
 
+  return (
+    <div id="sidebar-mid">
+      {/* { map all essays/codex/.. } */}
+      {memoizedList.map(({ text, _id }, index) => (
+        <Link to={`${pathname}/${index}`} className="sb-item-a" key={index}>
+          <div id="sb-fade-block"></div>
+          <div className="sb-item-container">
+            <DocIcon />
+            <span>
+              {text} {index}
+            </span>
+            <div>
+              <PenIcon />
+              <TrashIcon />
+            </div>
+          </div>
+        </Link>
+      ))}
+      <Link to="#" id="sb-show-more" onClick={handleShowMore}>
+        {lang.sidebar.showMore}
+      </Link>
+    </div>
+  );
+};
+
+const SidebarBottom = ({ mode, lang }) => {
+  const dispatch = useDispatch();
   const menuItems = [
     {
       text: lang.sidebar.deleteAll,
@@ -45,75 +84,48 @@ const Sidebar = () => {
     {
       text: lang.sidebar.myAccount,
       icon: <UserIcon />,
-      handle: ({ text }) => console.log(text),
+      handle: ({ text }) => console.log(Userfront.accessToken()),
     },
     {
       text: lang.sidebar.logOut,
       icon: <Logout />,
-      handle: ({ text }) => console.log(text),
+      handle: () => {
+        dispatch(setSignedIn(false));
+        Userfront.logout();
+      },
     },
   ];
+  return (
+    <div id="sidebar-bottom">
+      {menuItems.map(({ text, icon, handle }, index) => (
+        <Link
+          to="#"
+          className="sb-item-a"
+          key={index}
+          onClick={() => {
+            handle({ text });
+          }}
+        >
+          <div className="sb-item-container">
+            {icon}
+            <span>{text}</span>
+          </div>
+        </Link>
+      ))}
+    </div>
+  );
+};
 
-  const handleShowMore = () => {
-    setList([...list, ...testItems]);
-  };
-
-  const memoizedList = useMemo(() => [...list], [testItems]);
+const Sidebar = () => {
+  const { mode, language } = useSelector((state) => state.global);
+  const lang = translations[language];
 
   return (
     <SidebarX>
-      <div id="sidebar-top">
-        <Link to="/" id="sidebar-home-btn">
-          <PenLogo />
-          {/* <HomeIcon /> */}
-        </Link>
-        <Link to="#" id="sidebar-new-btn">
-          <PlusIcon />
-          {lang.sidebar.newChat}
-        </Link>
-      </div>
-
-      <div id="sidebar-mid">
-        {/* { map all essays/codex/.. } */}
-        {memoizedList.map(({ text, _id }, index) => (
-          <Link to={`${pathname}/${index}`} className="sb-item-a" key={index}>
-            <div id="sb-fade-block"></div>
-            <div className="sb-item-container">
-              <DocIcon />
-              <span>
-                {text} {index}
-              </span>
-              <div>
-                <PenIcon />
-                <TrashIcon />
-              </div>
-            </div>
-          </Link>
-        ))}
-        <Link to="#" id="sb-show-more" onClick={handleShowMore}>
-          {lang.sidebar.showMore}
-        </Link>
-      </div>
-
+      <SidebarTop lang={lang} />
+      <SidebarMid lang={lang} />
       <SideBarHr />
-
-      <div id="sidebar-bottom">
-        {menuItems.map(({ text, icon, handle }, index) => (
-          <Link
-            to="#"
-            className="sb-item-a"
-            key={index}
-            onClick={() => {
-              handle({ text });
-            }}
-          >
-            <div className="sb-item-container">
-              {icon}
-              <span>{text}</span>
-            </div>
-          </Link>
-        ))}
-      </div>
+      <SidebarBottom mode={mode} lang={lang} />
     </SidebarX>
   );
 };
@@ -126,6 +138,7 @@ const SideBarHr = styled.hr`
 `;
 
 const SidebarX = styled.nav`
+  opacity: 0.8;
   height: calc(100vh - 1rem);
   width: 250px;
   margin-top: 0.5rem;
@@ -135,7 +148,6 @@ const SidebarX = styled.nav`
   flex-direction: column;
   justify-content: space-between;
   border-radius: 0.5rem;
-
   color: ${(props) => props.theme.grey[900]};
   background-color: ${(props) => props.theme.background[200]};
   /*   For later:
@@ -144,6 +156,11 @@ const SidebarX = styled.nav`
               height: isNonMobile ? "calc(100vh - 1.5rem)" : "100vh",
               margin: isNonMobile ? "0.75rem 0 0.75rem 0.75rem" : "0",
   */
+  /* position: absolute; */
+  /* top: 0; */
+  /* left: 0; */
+  /* z-index: 5; */
+  /* backdrop-filter: blur(30px); */
 
   a {
     display: flex;
@@ -176,7 +193,9 @@ const SidebarX = styled.nav`
       margin-right: 0.5rem;
     }
     #sidebar-new-btn {
-      width: calc(100% - 50px);
+      /* width: calc(100% - 50px); save this for more services*/
+      width: calc(100%);
+
       svg {
         margin-right: 0.5rem;
       }

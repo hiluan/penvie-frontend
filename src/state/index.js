@@ -26,7 +26,9 @@ const saveState = (state) => {
 const initialState = loadState() || {
   mode: "light",
   language: "en",
+  signedIn: false,
   page: "/",
+  view: "", // current chat
 };
 
 export const globalSlice = createSlice({
@@ -41,12 +43,21 @@ export const globalSlice = createSlice({
       state.language = action.payload;
       saveState(state);
     },
+    setSignedIn: (state, action) => {
+      state.signedIn = action.payload;
+      saveState(state);
+    },
     setPage: (state, action) => {
       state.page = action.payload;
+      saveState(state);
+    },
+    setView: (state, action) => {
+      state.view = action.payload;
       saveState(state);
     },
   },
 });
 
-export const { setMode, setLanguage, setPage } = globalSlice.actions;
+export const { setMode, setLanguage, setSignedIn, setPage, setView } =
+  globalSlice.actions;
 export default globalSlice.reducer;

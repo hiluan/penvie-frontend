@@ -28,5 +28,7 @@ const ChatGPT = () => {
   );
 };
 
-const ChatGPTX = styled.section``;
+const ChatGPTX = styled.section`
+  height: 100vh;
+`;
 export default ChatGPT;

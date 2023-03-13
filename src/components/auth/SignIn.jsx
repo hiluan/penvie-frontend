@@ -1,28 +1,46 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Userfront from "@userfront/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import google from "../../assets/google.png";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { setSignedIn } from "state";
+
 Userfront.init(process.env.REACT_APP_USERFRONT_ACCOUNT_ID);
 
 const SignIn = ({ lang }) => {
+  const dispatch = useDispatch();
   const [error, setError] = useState(null);
+  useEffect(() => {
+    if (
+      document.location.search.includes("token=") &&
+      document.location.search.includes("uuid=")
+    ) {
+      Userfront.login({ method: "link" });
+      dispatch(setSignedIn(true));
+    }
+  }, []);
 
-  const handleSignIn = () => {
-    Userfront.login({ method: "google" }).catch((err) => {
-      setError(err.message);
-    });
-  };
-  return (
-    <SignInX>
-      {error && <div>Error: {error}</div>}
-
-      <button onClick={handleSignIn}>
+  const SSOButton = ({ provider }) => {
+    const handleClick = (e) => {
+      e.preventDefault();
+      Userfront.login({ method: provider }).catch((err) => {
+        setError(err.message);
+      });
+    };
+    return (
+      <button onClick={handleClick}>
         <h4>{lang.home.signin}</h4>
-        {/* <h4>đăng nhập với</h4> */}
         <div></div>
         <img src={google} alt="Sign in with Google" />
       </button>
+    );
+  };
+
+  return (
+    <SignInX>
+      {error && <div>Error: {error}</div>}
+      <SSOButton provider="google" />
       <p>{lang.home.notice}</p>
       <p>
         {<Link to="/terms">{lang.home.terms} </Link>}
@@ -46,7 +64,7 @@ const SignInX = styled.section`
     align-items: center;
     border-radius: 0.375rem;
     padding: 0.375rem 0;
-    margin-bottom: 0.8rem;
+    margin-bottom: 1.5rem;
     border: none;
     background-color: ${(props) => props.theme.background[10]};
     transition: box-shadow 0.3s ease, filter 0.3s ease;
@@ -60,6 +78,7 @@ const SignInX = styled.section`
     h4 {
       color: ${(props) => props.theme.grey[900]};
     }
+
     img {
       position: absolute;
       right: 15%;
