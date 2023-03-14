@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import Userfront from "@userfront/react";
-import { Link, useNavigate } from "react-router-dom";
-import google from "../../assets/google.png";
-import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { setSignedIn } from "state";
-
+import { Link } from "react-router-dom";
+import google from "../../assets/google.png";
+import styled from "styled-components";
+import Userfront from "@userfront/react";
 Userfront.init(process.env.REACT_APP_USERFRONT_ACCOUNT_ID);
 
 const SignIn = ({ lang }) => {

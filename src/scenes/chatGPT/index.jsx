@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { useNewChatMutation } from "state/apiChat";
+import { useNewChatGptMutation } from "state/apiChat";
 import { useSelector } from "react-redux";
 import { ChatForm } from "components/chat";
 import translations from "../../languages/translations.json";
 import styled from "styled-components";
 
 const ChatGPT = () => {
-  const [trigger] = useNewChatMutation();
+  const [trigger] = useNewChatGptMutation();
   const { language } = useSelector((state) => state.global);
   const lang = translations[language];
 

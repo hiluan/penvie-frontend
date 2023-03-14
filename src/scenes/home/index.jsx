@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import { createRef, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import {
   CodeIcon,
@@ -9,9 +10,8 @@ import {
 } from "assets/icons";
 import translations from "../../languages/translations.json";
 import styled from "styled-components";
-import { createRef, useEffect, useRef } from "react";
-import Userfront from "@userfront/react";
-import SignIn from "components/auth/SignIn";
+import SignIn from "components/user/SignIn";
+import { GetUserData } from "components/utils";
 // Set current language for based on user's browser
 
 const Services = ({ lang }) => {
@@ -84,6 +84,7 @@ const Home = () => {
     >
       <div id="home-top">
         <PenLogo />
+        <button onClick={() => GetUserData()}>dafds</button>
         <h1>{lang.home.title}</h1>
         <p>{lang.home.subtitle}</p>
       </div>

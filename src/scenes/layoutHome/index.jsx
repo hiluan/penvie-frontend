@@ -8,12 +8,15 @@ import styled from "styled-components";
 const LayoutHome = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   // const isNonMobile = useMediaQuery("(min-width: 600px)");
+  // const userId = useSelector((state) => state.global.userId);
+  // const { data } = useGetUserQuery(userId);
   const { page } = useSelector((state) => state.global);
 
   return (
     <LayoutContainer>
       <div id="outlet-container">
         <Navbar
+          // user={data || {}}
           isSidebarOpen={isSidebarOpen}
           setIsSidebarOpen={setIsSidebarOpen}
         />

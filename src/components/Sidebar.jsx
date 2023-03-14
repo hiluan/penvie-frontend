@@ -11,7 +11,8 @@ import {
 } from "assets/icons";
 import { setMode, setSignedIn } from "state";
 import { Link, useLocation } from "react-router-dom";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useGetChatGptQuery } from "state/apiChat";
 import translations from "../languages/translations.json";
 import styled from "styled-components";
 import Userfront from "@userfront/react";
@@ -34,10 +35,14 @@ const SidebarTop = ({ lang }) => {
 };
 
 const SidebarMid = ({ lang }) => {
+  // use pathname to get current page => get backend's data
+  const { pathname } = useLocation();
+  const { data } = useGetChatGptQuery();
+  console.log("🚀 ~ data:", data);
+
   const testItems = new Array(20).fill({ text: "This is the Chat number" });
   const [list, setList] = useState(testItems);
   const memoizedList = useMemo(() => [...list], [testItems]);
-  const { pathname } = useLocation();
 
   const handleShowMore = () => {
     setList([...list, ...testItems]);
@@ -70,6 +75,7 @@ const SidebarMid = ({ lang }) => {
 
 const SidebarBottom = ({ mode, lang }) => {
   const dispatch = useDispatch();
+
   const menuItems = [
     {
       text: lang.sidebar.deleteAll,
@@ -84,7 +90,7 @@ const SidebarBottom = ({ mode, lang }) => {
     {
       text: lang.sidebar.myAccount,
       icon: <UserIcon />,
-      handle: ({ text }) => console.log(Userfront.accessToken()),
+      handle: () => console.log(Userfront.accessToken()),
     },
     {
       text: lang.sidebar.logOut,

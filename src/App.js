@@ -36,13 +36,13 @@ function App() {
               {!!signedIn && (
                 <Route element={<LayoutProtected />}>
                   {/* FOR LATER <Route path="/" element={<Home />} /> */}
-                  {/* <Route
-                    path="/"
+                  <Route
+                    path="*"
                     element={<Navigate to="/chatgpt" replace />}
-                    // element={<ChatGPT />}
-                  /> */}
-                  <Route path="/" element={<Home />} />
+                  />
                   <Route path="/chatgpt" element={<ChatGPT />} />
+                  {/* <Route path="/" element={<Home />} /> */}
+                  {/* <Route path="/" element={<ChatGPT />} /> */}
                   {/* <Route path="/essays" element={<Essays />} /> */}
                 </Route>
               )}

@@ -1,4 +1,4 @@
-import ReplaceUnderscores from "./ReplaceUnderscore";
+import GetUserData from "./GetUserData";
+import ReplaceUnderscores from "./ReplaceUnderscores";
 import StatePageUpdater from "./StatePageUpdater";
-
-export { StatePageUpdater, ReplaceUnderscores };
+export { GetUserData, StatePageUpdater, ReplaceUnderscores };
