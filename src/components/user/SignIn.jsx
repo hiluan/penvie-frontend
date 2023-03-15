@@ -31,7 +31,7 @@ const SignIn = ({ lang }) => {
       <button onClick={handleClick}>
         <h4>{lang.home.signin}</h4>
         <div></div>
-        <img src={google} alt="Sign in with Google" />
+        <img className="animate-grow" src={google} alt="Sign in with Google" />
       </button>
     );
   };

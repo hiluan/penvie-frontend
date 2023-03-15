@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import Userfront from "@userfront/react";
 
 export const apiChat = createApi({
   reducerPath: "apiChat",
@@ -17,11 +16,12 @@ export const apiChat = createApi({
       }),
     }),
     getChatGpt: build.query({
-      query(args) {
+      // query: () => `/api/v1/chatgpt`,
+      query(accessToken) {
         return {
           url: `/api/v1/chatgpt`,
           headers: {
-            Authorization: `Bearer ${Userfront.accessToken()}`,
+            Authorization: `Bearer ${accessToken}`,
           },
         };
       },

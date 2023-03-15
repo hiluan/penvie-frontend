@@ -47,3 +47,7 @@ useEffect(() => {
   })();
 }, []);
 ```
+
+- Problem with the private data not loading/showing up on the Sidebar after users log in. The data is only displayed after they manually refresh the browser. Solution: check if the `accessToken` is available in the `App.js` before route the user to `/chatgpt`.
+
+- Problem with clicking on `Link` in `Sidebar`: any click on any `a` sends an API request to the backend. Solution: Move the API request to a higher-level componen: If the data fetched from the API is needed by multiple components, it might be better to move the API request to a higher-level component, such as the LayoutProtected component. This way, the API request is only made once, when the LayoutProtected component is mounted, and the data can be passed down to the SidebarMid component via props.

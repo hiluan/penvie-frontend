@@ -19,7 +19,7 @@ const Services = ({ lang }) => {
     {
       title: lang.category.essays.title,
       subtitle: lang.category.essays.subtitle,
-      link: "/essays",
+      link: "/chatgpt",
       icon: <EssayIcon />,
       background: "pink-gradient-bg",
     },
@@ -84,7 +84,6 @@ const Home = () => {
     >
       <div id="home-top">
         <PenLogo />
-        <button onClick={() => GetUserData()}>dafds</button>
         <h1>{lang.home.title}</h1>
         <p>{lang.home.subtitle}</p>
       </div>
@@ -114,11 +113,11 @@ const HomeX = styled.section`
       font-size: 2.4rem;
     }
     h1 {
+      margin-top: 1rem;
       font-family: "Open Sans", sans-serif;
-      color: ${(props) => props.theme.grey[700]};
       font-weight: lighter;
       font-size: 3rem;
-      margin-top: 1rem;
+      color: ${(props) => props.theme.grey[700]};
     }
 
     p {
@@ -131,7 +130,6 @@ const HomeX = styled.section`
     display: grid;
     grid-gap: 1rem;
     grid-template-columns: 1fr; /* Default value for all screen sizes */
-    /* background-color: rgba(${(props) => props.theme.background[0]}, 5); */
     padding: 1rem;
     border-radius: 1rem;
     transition: box-shadow 0.3s ease;
@@ -151,7 +149,6 @@ const HomeX = styled.section`
       align-items: center;
       border-radius: 1rem;
       color: white;
-      /* color: ${(props) => props.theme.grey[900]}; */
       transition: transform ease 0.3s, filter ease 0.3s;
       &:hover {
         filter: brightness(1.1);

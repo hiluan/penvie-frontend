@@ -16,6 +16,7 @@ import { useGetChatGptQuery } from "state/apiChat";
 import translations from "../languages/translations.json";
 import styled from "styled-components";
 import Userfront from "@userfront/react";
+import { useGetEssayChatsQuery } from "state/apiEssays";
 
 Userfront.init(process.env.REACT_APP_USERFRONT_ACCOUNT_ID);
 
@@ -34,19 +35,17 @@ const SidebarTop = ({ lang }) => {
   );
 };
 
-const SidebarMid = ({ lang }) => {
-  // use pathname to get current page => get backend's data
-  const { pathname } = useLocation();
-  const { data } = useGetChatGptQuery();
-  console.log("🚀 ~ data:", data);
-
+const SidebarMid = ({ lang, data }) => {
   const testItems = new Array(20).fill({ text: "This is the Chat number" });
   const [list, setList] = useState(testItems);
   const memoizedList = useMemo(() => [...list], [testItems]);
-
   const handleShowMore = () => {
     setList([...list, ...testItems]);
   };
+
+  // use pathname to get current page => get backend's data
+  const { pathname } = useLocation();
+  if (!data) return <div id="sidebar-mid">is loading</div>;
 
   return (
     <div id="sidebar-mid">
@@ -122,14 +121,18 @@ const SidebarBottom = ({ mode, lang }) => {
   );
 };
 
-const Sidebar = () => {
+const Sidebar = ({ data, isSidebarOpen }) => {
   const { mode, language } = useSelector((state) => state.global);
   const lang = translations[language];
 
   return (
-    <SidebarX>
+    <SidebarX
+      style={{
+        display: isSidebarOpen ? "flex" : "none",
+      }}
+    >
       <SidebarTop lang={lang} />
-      <SidebarMid lang={lang} />
+      <SidebarMid lang={lang} data={data} />
       <SideBarHr />
       <SidebarBottom mode={mode} lang={lang} />
     </SidebarX>
@@ -156,6 +159,8 @@ const SidebarX = styled.nav`
   border-radius: 0.5rem;
   color: ${(props) => props.theme.grey[900]};
   background-color: ${(props) => props.theme.background[200]};
+  transition: transform 0.1s ease;
+  z-index: 2;
   /*   For later:
               borderRadius: isNonMobile ? "9px" : "0",
               borderWidth: isNonMobile ? 0 : "3px",
@@ -189,7 +194,6 @@ const SidebarX = styled.nav`
 
     a {
       padding: 0.4rem 0;
-      /* padding: 0.75rem 0; */
       margin: 0.25rem 0;
       border: 1px solid ${(props) => props.theme.background[300]};
     }

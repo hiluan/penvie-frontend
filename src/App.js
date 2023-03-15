@@ -10,11 +10,14 @@ import LayoutHome from "./scenes/layoutHome";
 import Essays from "./scenes/essays";
 import ChatGPT from "scenes/chatGPT";
 import LayoutProtected from "scenes/layoutProtected";
+import { useEffect, useState } from "react";
+import Userfront from "@userfront/react";
 
 function App() {
   const { mode, signedIn } = useSelector((state) => state.global);
   const theme = themes[mode];
-
+  const accessToken = Userfront.accessToken();
+  // const isAuth = signedIn && Boolean(accessToken);
   return (
     <ThemeProvider theme={theme}>
       <div className="app">
@@ -34,12 +37,13 @@ function App() {
               )}
 
               {!!signedIn && (
-                <Route element={<LayoutProtected />}>
-                  {/* FOR LATER <Route path="/" element={<Home />} /> */}
-                  <Route
-                    path="*"
+                <Route element={<LayoutProtected accessToken={accessToken} />}>
+                  <Route path="/" element={<Home />} />
+                  {/* <Route
+                    path="/*"
                     element={<Navigate to="/chatgpt" replace />}
-                  />
+                  /> */}
+
                   <Route path="/chatgpt" element={<ChatGPT />} />
                   {/* <Route path="/" element={<Home />} /> */}
                   {/* <Route path="/" element={<ChatGPT />} /> */}

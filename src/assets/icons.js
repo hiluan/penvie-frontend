@@ -338,3 +338,24 @@ export const ChevronUp = React.memo(() => (
     <path d="M0 0h24v24H0z" fill="none" />
   </svg>
 ));
+
+export const CloseIcon = React.memo(() => (
+  <svg viewBox="0 0 24 24" width="24" height="24">
+    <path
+      fill="currentColor"
+      d="M19.354 5.354a.5.5 0 0 0-.708 0L12 11.293 5.354 4.646a.5.5 0 0 0-.708.708L11.293 12l-6.647 6.646a.5.5 0 0 0 .708.708L12 12.707l6.646 6.647a.5.5 0 0 0 .708-.708L12.707 12l6.647-6.646a.5.5 0 0 0 0-.708z"
+    />
+  </svg>
+));
+
+export const MenuIcon = React.memo(() => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+  >
+    <path d="M0 0h24v24H0z" fill="none" />
+    <path fill="currentColor" d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z" />
+  </svg>
+));
